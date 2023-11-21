@@ -19,9 +19,11 @@
   },
   "homepage": "https://github.com/JhonathanHU3/sink-games-academy#readme",
   "dependencies": {
+    "cookie-parser": "^1.4.6",
     "dotenv": "^16.3.1",
     "ejs": "^3.1.9",
     "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.2",
     "postgres": "^3.4.3"
   }
 }
