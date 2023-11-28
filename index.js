@@ -21,19 +21,19 @@ app.use(routes);
 
 /* Rendering static pages */
 // Function to render the index page
-const renderIndexPage = (req, res) => {
+app.get((req, res) => {
   return res.render("index");
-};
+});
 
 // Function to render the register page
-const renderRegisterPage = (req, res) => {
+app.get((req, res) => {
   return res.render("login");
-};
+});
 
 //Function to render the login page
-const renderLoginPage = (req, res) => {
+app.get((req, res) => {
   return res.render("register");
-};
+});
 
 // Starting the server on the locally defined port or the server defined port
 app.listen(
