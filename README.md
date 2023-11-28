@@ -1,2 +1,2 @@
-# sink-games-academy
-Repositório oficial da Sink Games Academy, uma plataforma de ensino a distância especializada jogos competitivos online
+# SINK GAMES ACADEMY
+Repositório oficial do Projeto Sink Games Academy, uma plataforma de ensino a distância especializada jogos competitivos online
