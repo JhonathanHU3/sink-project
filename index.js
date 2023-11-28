@@ -19,6 +19,22 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded());
 app.use(routes);
 
+/* Rendering static pages */
+// Function to render the index page
+const renderIndexPage = (req, res) => {
+  return res.render("index");
+};
+
+// Function to render the register page
+const renderRegisterPage = (req, res) => {
+  return res.render("login");
+};
+
+//Function to render the login page
+const renderLoginPage = (req, res) => {
+  return res.render("register");
+};
+
 // Starting the server on the locally defined port or the server defined port
 app.listen(
   {
