@@ -21,17 +21,17 @@ app.use(routes);
 
 /* Rendering static pages */
 // Function to render the index page
-app.get((req, res) => {
+app.get("/index", (req, res) => {
   return res.render("index");
 });
 
 // Function to render the register page
-app.get((req, res) => {
+app.get("/login", (req, res) => {
   return res.render("login");
 });
 
 //Function to render the login page
-app.get((req, res) => {
+app.get("/register", (req, res) => {
   return res.render("register");
 });
 
