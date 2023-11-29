@@ -9,12 +9,13 @@ import { registerUserInDb, getUserInDb } from "../models/User.js";
 const registerUser = async (req, res) => {
   const userId = randomUUID();
   const profilePhotoDir = `/img/profileImg/${Math.ceil(Math.random() * 10)}.jpg`;
-  const fullName = req.body.fullName;
+  const fullName = req.body.fullname;
+  const username = req.body.username;
   const userEmail = req.body.email;
   const hashedPassword = await bcrypt.hash(req.body.password, 10);
 
   try {
-    await registerUserInDb(userId, fullName, userId, userEmail, profilePhotoDir, hashedPassword);
+    await registerUserInDb(userId, fullName, username, userEmail, profilePhotoDir, hashedPassword);
     return res.redirect("/login")
   } catch(err) {
     console.log(err)
@@ -23,15 +24,16 @@ const registerUser = async (req, res) => {
 };
 
 const loginUser = async (req, res) => {
-  const userEmail = req.body.userEmail
-  const userPassword = req.body.userEmail
+  const userEmail = req.body.email
+  const userPassword = req.body.password
 
-  let user = await getUserInDb(userEmail)
-  if(user.length === 1) {
-    const passwordCheck = await bcrypt.compare(req.body.password, user.password);
+  let [user] = await getUserInDb(userEmail)
+  if(user) {
+    const passwordCheck = await bcrypt.compare(userPassword, user.password);
     
     if(passwordCheck) {
-      const token = tokenGeneration(user.id);
+      const token = await tokenGeneration(user.id);
+      console.log(token)
       res.cookie("token", token, {
         httpOnly: true,
       });
@@ -39,8 +41,12 @@ const loginUser = async (req, res) => {
       res.cookie("user", JSON.stringify(user), {
         httpOnly: true,
       })
+      console.log("logado")
       return res.redirect("/home");
     }
+  } else {
+    console.log("Usuário não encontrado")
+    return res.redirect("/login")
   }
 };
 

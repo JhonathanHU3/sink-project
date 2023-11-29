@@ -3,8 +3,8 @@ import "dotenv/config";
 
 let { SECRET } = process.env;
 
-function tokenGeneration(userId) {
-  return jwt.sign({ userId: userId }, SECRET, { expiresIn: 3000 });
+async function tokenGeneration(userId) {
+  return await jwt.sign({ data: userId }, SECRET, { expiresIn: "1h" });
 }
 
 const verifyToken = (req, res, next) => {
