@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Posts</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    #post-form {
+      max-width: 600px;
+      margin-bottom: 20px;
+    }
+
+    #post-form input,
+    #post-form textarea,
+    #post-form button {
+      display: block;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Lista de Posts</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Título</th>
+        <th>Conteúdo</th>
+        <th>User ID</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% posts.forEach(post => { %>
+        <tr>
+          <td><%= post.title %></td>
+          <td><%= post.content %></td>
+          <td><%= post.userid %></td>
+        </tr>
+      <% }); %>
+    </tbody>
+  </table>
+
+  <form id="post" method="POST" action="/posts">
+    <label for="title">Título:</label>
+    <input type="text" id="title" name="title" placeholder="Título">
+
+    <label for="content">Conteúdo:</label>
+    <textarea id="content" name="content" placeholder="Conteúdo"></textarea>
+
+    <label for="userId">Usuário ID:</label>
+    <input type="text" id="userId" name="userId" placeholder="Usuário ID">
+
+    <button type="submit">Criar Postagem</button>
+  </form>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      const postForm = document.getElementById('post-form');
+
+      // Adiciona um ouvinte de eventos para o envio do formulário
+      postForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const title = document.getElementById('post-title').value;
+        const content = document.getElementById('post-content').value;
+        const userId = document.getElementById('post-userId').value;
+
+        // Envia os dados do formulário para o controlador createPost
+        const response = await fetch('/posts', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ title, content, userId }),
+        });
+
+        // Recarrega a página para atualizar a lista de postagens
+        location.reload();
+      });
+    });
+  </script>
+
+</body>
+</html>
+
