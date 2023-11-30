@@ -32,15 +32,10 @@ const loginUser = async (req, res) => {
     const passwordCheck = await bcrypt.compare(userPassword, user.password);
     
     if(passwordCheck) {
-      const token = await tokenGeneration(user.id);
-      console.log(token)
+      const token = await tokenGeneration(user.id, user.fullname, user.profileimagedir);
       res.cookie("token", token, {
         httpOnly: true,
       });
-      user = {id: user.id, fullName: user.fullName, email: user.email, profilePhotoDir: user.profilePhotoDir};
-      res.cookie("user", JSON.stringify(user), {
-        httpOnly: true,
-      })
       console.log("logado")
       return res.redirect("/home");
     }
