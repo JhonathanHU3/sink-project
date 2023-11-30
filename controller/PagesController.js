@@ -27,9 +27,15 @@ export const renderUserPage = async (req, res) => {
   const userId = req.params.id;
   const [user] = await User.getUserInDb(userId, "id");
   if (user) {
-    res.render("profile", { user });
+    if (userId === user.id) {
+      const editProfileButton = '<a href="/editar-perfil">Editar Perfil</a>';
+      return res.render("profile", { user, editProfileButton });
+    }
+
+    const editProfileButton = undefined;
+    return res.render("profile", { user, editProfileButton });
   } else {
-    console.log("Erro: usuário não encontrado")
-    res.redirect("/");
+    console.log("Erro: usuário não encontrado");
+    return res.redirect("/home");
   }
 };

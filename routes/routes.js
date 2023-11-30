@@ -21,7 +21,7 @@ routes.post("/login", UserManager.loginUser);
 routes.get("/home", verifyToken, PagesController.renderHomePage)
 
 // Route to access any user page
-routes.get("/user/:id", PagesController.renderUserPage)
+routes.get("/user/:id", verifyToken, PagesController.renderUserPage)
 
 export { routes };
 

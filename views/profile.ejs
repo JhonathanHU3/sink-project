@@ -9,6 +9,10 @@
     <h1>Hello <%= user.username %></h1>
 
       <img src="<%= user.profileimagedir %>" width="100px" height="100px"/>
+
+      <% if(editProfileButton) { %>
+        <%- editProfileButton  %> 
+      <% } %>  
     
 </body>
 </html>
