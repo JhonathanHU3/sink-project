@@ -40,6 +40,10 @@
 </head>
 <body>
 
+  <h2>Filtrar por Class ID</h2>
+
+ <a href="/posts/:1">aaaaa</a>
+
   <h2>Lista de Posts</h2>
 
   <table>
@@ -48,6 +52,7 @@
         <th>Título</th>
         <th>Conteúdo</th>
         <th>User ID</th>
+        <th>Class ID</th>
       </tr>
     </thead>
     <tbody>
@@ -56,6 +61,7 @@
           <td><%= post.title %></td>
           <td><%= post.content %></td>
           <td><%= post.userid %></td>
+          <td><%= post.classid %></td>
         </tr>
       <% }); %>
     </tbody>
@@ -71,34 +77,13 @@
     <label for="userId">Usuário ID:</label>
     <input type="text" id="userId" name="userId" placeholder="Usuário ID">
 
+    <label for="classId">Id da aula:</label>
+    <input type="text" id="classId" name="classId" placeholder="Class ID">
+
     <button type="submit">Criar Postagem</button>
   </form>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', async () => {
-      const postForm = document.getElementById('post-form');
-
-      // Adiciona um ouvinte de eventos para o envio do formulário
-      postForm.addEventListener('submit', async (event) => {
-        event.preventDefault();
-        const title = document.getElementById('post-title').value;
-        const content = document.getElementById('post-content').value;
-        const userId = document.getElementById('post-userId').value;
-
-        // Envia os dados do formulário para o controlador createPost
-        const response = await fetch('/posts', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ title, content, userId }),
-        });
-
-        // Recarrega a página para atualizar a lista de postagens
-        location.reload();
-      });
-    });
-  </script>
+  <script></script>
 
 </body>
 </html>
