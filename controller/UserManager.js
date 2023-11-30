@@ -6,7 +6,7 @@ import { registerUserInDb, getUserInDb } from "../models/User.js";
 
 
 // Function to obtain user data and generate a unique ID, random profile photo and then save it to the database
-const registerUser = async (req, res) => {
+export const registerUser = async (req, res) => {
   const userId = randomUUID();
   const profilePhotoDir = `/img/profileImg/${Math.ceil(Math.random() * 10)}.jpg`;
   const fullName = req.body.fullname;
@@ -23,11 +23,11 @@ const registerUser = async (req, res) => {
   }
 };
 
-const loginUser = async (req, res) => {
+export const loginUser = async (req, res) => {
   const userEmail = req.body.email
   const userPassword = req.body.password
 
-  let [user] = await getUserInDb(userEmail)
+  let [user] = await getUserInDb(userEmail, "email")
   if(user) {
     const passwordCheck = await bcrypt.compare(userPassword, user.password);
     
@@ -45,4 +45,3 @@ const loginUser = async (req, res) => {
   }
 };
 
-export { registerUser, loginUser };

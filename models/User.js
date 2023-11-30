@@ -1,6 +1,6 @@
 import { sql } from "../database/db.js";
 
-const registerUserInDb = async (
+export const registerUserInDb = async (
   userId,
   fullName,
   username,
@@ -14,8 +14,12 @@ const registerUserInDb = async (
     `;
 };
 
-const getUserInDb = async (userEmail) => {
-  return await sql`SELECT * FROM users WHERE email = ${userEmail}`;
+export const getUserInDb = async (userData, searchType) => {
+  try {
+    return await sql`SELECT * FROM users WHERE ${sql(searchType)} = ${userData}`;
+  } catch (err) {
+    console.error(err);
+  }
 };
 
-export { registerUserInDb, getUserInDb };
+

@@ -20,5 +20,8 @@ routes.post("/login", UserManager.loginUser);
 // Home page route with token verification
 routes.get("/home", verifyToken, PagesController.renderHomePage)
 
+// Route to access any user page
+routes.get("/user/:id", PagesController.renderUserPage)
+
 export { routes };
 
