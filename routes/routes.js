@@ -21,6 +21,6 @@ routes.get('/posts/:classId', showPostsByClassId);
 // Home page route with token verification
 routes.get("/home", verifyToken, (req, res) => {
     res.render("home");
+})
 
 export { routes };
-
