@@ -24,16 +24,18 @@ export const renderHomePage = (req, res) => {
 
 // Rendering userpage with user credentials
 export const renderUserPage = async (req, res) => {
-  const userId = req.params.id;
-  const [user] = await User.getUserInDb(userId, "id");
+  const loggedInUser = req.user.userId;
+  const [user] = await User.getUserInDb(req.params.id, "id");
+
   if (user) {
-    if (userId === user.id) {
-      const editProfileButton = '<a href="/editar-perfil">Editar Perfil</a>';
-      return res.render("profile", { user, editProfileButton });
+    if (loggedInUser === user.id) {
+      const canEdit = true;
+      
+      return res.render("profile", { user, canEdit });
     }
 
-    const editProfileButton = undefined;
-    return res.render("profile", { user, editProfileButton });
+    const canEdit = false;
+    return res.render("profile", { user, canEdit });
   } else {
     console.log("Erro: usuário não encontrado");
     return res.redirect("/home");
