@@ -41,12 +41,20 @@
         <button onclick="openPopup()">Abrir Popup</button>
 
         <div id="popup">
-            <p>Conteúdo do Popup</p>
+            <form method="post" action="/user/<%= user.username %>?_method=PUT">
+                <label for="name">Nome:</label>
+                <input type="text" value="<%= user.fullname %>" id="name" name="name" required><br>
+        
+                <label for="username">Username:</label>
+                <input type="text" value="<%= user.username %>" id="username" name="username" required>
+        
+                <button type="submit">Salvar</button>
+            </form>
             <button onclick="closePopup()">Fechar</button>
         </div>
 
         <div id="overlay"></div>
-        
+
         <script>
             // Função para abrir o popup
             function openPopup() {

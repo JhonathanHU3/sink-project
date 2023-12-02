@@ -3,6 +3,7 @@ import express from "express";
 import path from "path";
 import { fileURLToPath } from "url";
 import { routes } from "./routes/routes.js";
+import methodOverride  from "method-override";
 
 const app = express();
 
@@ -14,6 +15,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // setting the configuration for correct server operation
+app.use(methodOverride('_method'))
 app.set("view engine", "ejs");
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded());

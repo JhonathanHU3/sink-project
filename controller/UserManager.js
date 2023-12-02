@@ -2,7 +2,8 @@
 import { randomUUID } from "node:crypto";
 import { tokenGeneration } from "./TokenController.js";
 import bcrypt from "bcrypt";
-import { registerUserInDb, getUserInDb } from "../models/User.js";
+import * as User from "../models/User.js";
+import { sql } from "../database/db.js";
 
 
 // Function to obtain user data and generate a unique ID, random profile photo and then save it to the database
@@ -15,7 +16,7 @@ export const registerUser = async (req, res) => {
   const hashedPassword = await bcrypt.hash(req.body.password, 10);
 
   try {
-    await registerUserInDb(userId, fullName, username, userEmail, profilePhotoDir, hashedPassword);
+    await User.registerUserInDb(userId, fullName, username, userEmail, profilePhotoDir, hashedPassword);
     return res.redirect("/login")
   } catch(err) {
     console.log(err)
@@ -27,12 +28,12 @@ export const loginUser = async (req, res) => {
   const userEmail = req.body.email
   const userPassword = req.body.password
 
-  let [user] = await getUserInDb(userEmail, "email")
+  let [user] = await User.getUserInDb(userEmail, "email")
   if(user) {
     const passwordCheck = await bcrypt.compare(userPassword, user.password);
     
     if(passwordCheck) {
-      const token = await tokenGeneration(user.id, user.fullname, user.profileimagedir);
+      const token = await tokenGeneration(user.id, user.username, user.profileimagedir);
       res.cookie("token", token, {
         httpOnly: true,
       });
@@ -45,3 +46,16 @@ export const loginUser = async (req, res) => {
   }
 };
 
+export const updateUser = async (req, res) => {
+  const updatedUser = req.body;
+  console.log(updatedUser)
+  console.log(req.user)
+  // Adicionar parte do código abaixo ao ../models/User.js!!!!
+  await sql`UPDATE users SET username = ${updatedUser.username}, fullname = ${updatedUser.name}
+  WHERE username = ${req.user.username};`
+
+  // Erro ao tentar dar update em um usuário duas vezes consecutivas
+  req.user.username = updatedUser.username;
+
+  return res.redirect(`/user/${updatedUser.username}`);
+}

@@ -18,15 +18,13 @@ export const renderRegisterPage = (req, res) => {
 // Function to render homepage
 export const renderHomePage = (req, res) => {
   const user = req.user;
-  console.log(user);
   return res.render("home", { user });
 };
 
 // Rendering userpage with user credentials
 export const renderUserPage = async (req, res) => {
   const loggedInUser = req.user.userId;
-  const [user] = await User.getUserInDb(req.params.id, "id");
-
+  const [user] = await User.getUserInDb(req.params.username, "username");  
   if (user) {
     if (loggedInUser === user.id) {
       const canEdit = true;
