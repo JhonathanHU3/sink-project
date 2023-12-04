@@ -22,4 +22,9 @@ export const getUserInDb = async (userData, searchType) => {
   }
 };
 
+export const updateUserInDb = async (userData) => {
+  return await sql`UPDATE users SET username = ${userData.username}, fullname = ${userData.name}, profileimagedir = ${userData.profileimagedir}
+  WHERE username = ${req.user.username} RETURNING *;`
+}
+
 
