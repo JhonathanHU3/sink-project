@@ -47,15 +47,19 @@ export const loginUser = async (req, res) => {
 };
 
 export const updateUser = async (req, res) => {
+  // fazer if else para verificar senha
   const updatedUser = req.body;
   console.log(updatedUser)
   console.log(req.user)
   // Adicionar parte do código abaixo ao ../models/User.js!!!!
-  await sql`UPDATE users SET username = ${updatedUser.username}, fullname = ${updatedUser.name}
-  WHERE username = ${req.user.username};`
-
+  const updatedUserData = await sql`UPDATE users SET username = ${updatedUser.username}, fullname = ${updatedUser.name}
+  WHERE username = ${req.user.username} RETURNING *;`
+  console.log(updatedUser);
+  
   // Erro ao tentar dar update em um usuário duas vezes consecutivas
+  // gerar novo token ao atualizar usuário!!
   req.user.username = updatedUser.username;
+  console.log(req.user)
 
   return res.redirect(`/user/${updatedUser.username}`);
 }
