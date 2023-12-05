@@ -11,6 +11,7 @@ export const getAllPosts = async () => {
   }
 };
 
+
 // Create a new post in the database
 export const createPost = async (title, content, userId, classId,) => {
   try {
@@ -34,12 +35,20 @@ export const getPostsByClassId = async (classId) => {
     }
     classId = classId.substring(1);
     const posts = await sql`SELECT * FROM posts WHERE classid = ${classId}`;
-    console.log(classId)
-    console.log(posts);
     return posts;
   } catch (error) {
     console.error(error);
     throw new Error('Erro ao obter postagens por classId');
+  }
+};
+
+export const getPostById = async (postId) => {
+  try {
+    const post = await sql`SELECT * FROM posts WHERE id = ${postId}`;
+    return post[0]; // Assumindo que há apenas um post com esse ID
+  } catch (error) {
+    console.error(error);
+    throw new Error('Erro ao obter post por ID');
   }
 };
 
