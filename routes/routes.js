@@ -2,7 +2,7 @@
 import { Router } from "express";
 import * as UserManager from "../controller/UserManager.js";
 import * as PagesController from "../controller/PagesController.js";
-import { submitPost, showAllPosts, showPostsByClassId } from "../controller/postController.js";
+import { submitPost, showAllPosts, showPostsByClassId } from "../controller/PostController.js";
 import { verifyToken } from "../controller/TokenController.js";
 import cookieParser from "cookie-parser";
 
@@ -18,7 +18,7 @@ routes.get("/login", PagesController.renderLoginPage);
 routes.post("/register", UserManager.registerUser);
 routes.post("/login", UserManager.loginUser);
 
-// Routes for Create ,Get and GetById
+// Routes to Create, Get, and Get by Course ID Forum Posts
 routes.get('/posts', showAllPosts);
 routes.post('/posts', submitPost);
 routes.get('/posts/:classId', showPostsByClassId);
