@@ -1,21 +1,26 @@
 import { sql } from "../database/db.js";
 
-const registerUserInDb = async (
-  userId,
-  fullName,
-  username,
-  userEmail,
-  profilePhotoDir,
-  hashedPassword
-) => {
+// Inserting new user into the database
+export const registerUserInDb = async (userId, fullName, username, userEmail, profilePhotoDir, hashedPassword) => {
   await sql`
     INSERT INTO users(id, fullname, username, email, password, profileimagedir)
     VALUES (${userId}, ${fullName}, ${username}, ${userEmail}, ${hashedPassword}, ${profilePhotoDir});
     `;
 };
 
-const getUserInDb = async (userEmail) => {
-  return await sql`SELECT * FROM users WHERE email = ${userEmail}`;
+// Getting data from an existing user
+export const getUserInDb = async (userData, searchType) => {
+  try {
+    return await sql`SELECT * FROM users WHERE ${sql(searchType)} = ${userData}`;
+  } catch (err) {
+    console.error(err);
+  }
 };
 
-export { registerUserInDb, getUserInDb };
+// Updating data for an existing user
+export const updateUserInDb = async (userData, oldUsername) => {
+  return await sql`UPDATE users SET username = ${userData.username}, fullname = ${userData.name}, profileimagedir = ${userData.profileimagedir}
+  WHERE username = ${oldUsername} RETURNING *;`
+}
+
+
