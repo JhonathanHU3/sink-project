@@ -11,12 +11,10 @@ export const showAllPosts = async (req, res) => {
   }
 };
 
-// Controller for creating a new post
 export const submitPost = async (req, res) => {
   const { title, content, userId, classId } = req.body;
 
   try {
-    // Adicione verificações para evitar valores undefined ou null
     if (!title || !content || !userId || !classId) {
       throw new Error('Valores inválidos para criar postagem');
     }

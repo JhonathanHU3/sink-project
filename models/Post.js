@@ -10,7 +10,7 @@ export const getAllPosts = async () => {
   }
 };
 
-export const createPost = async (title, content, userId, classId,) => {
+export const createPost = async (title, content, userId, classId) => {
   try {
     const result = await sql`INSERT INTO posts (title, content, userid, classid) VALUES (${title}, ${content}, ${userId}, ${classId}) RETURNING *`;
     return result[0];
@@ -27,12 +27,20 @@ export const getPostsByClassId = async (classId) => {
     }
     classId = classId.substring(1);
     const posts = await sql`SELECT * FROM posts WHERE classid = ${classId}`;
-    console.log(classId)
-    console.log(posts);
     return posts;
   } catch (error) {
     console.error(error);
     throw new Error('Erro ao obter postagens por classId');
+  }
+};
+
+export const getPostById = async (postId) => {
+  try {
+    const post = await sql`SELECT * FROM posts WHERE id = ${postId}`;
+    return post[0]; // Assumindo que há apenas um post com esse ID
+  } catch (error) {
+    console.error(error);
+    throw new Error('Erro ao obter post por ID');
   }
 };
 
