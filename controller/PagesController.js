@@ -1,4 +1,5 @@
 import * as User from "../models/User.js";
+import * as Courses from "../models/Courses.js";
 
 // Function to render the static index page
 export const renderIndex = (req, res) => {
@@ -18,8 +19,8 @@ export const renderRegisterPage = (req, res) => {
 // Function to render homepage
 export const renderHomePage = async (req, res) => {
   const user = req.user;
-  const courses = await getAllCoursesInDb();
-  return res.render("home", { user });
+  const courses = await Courses.getAllCoursesInDb();
+  return res.render("home", { user, courses });
 };
 
 // Rendering userpage with user credentials
@@ -41,3 +42,7 @@ export const renderUserPage = async (req, res) => {
     return res.redirect("/home");
   }
 };
+
+// Rendering courses pages with all disponibility modules
+export let renderCoursePage;
+

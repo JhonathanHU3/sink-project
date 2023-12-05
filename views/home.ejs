@@ -12,7 +12,12 @@
       <img src="<%= user.profileImageDir %>" width="100px" height="100px"/>
 
     </a>
-
-    <a href="/courses/<%=  %>"></a>
+ 
+    <% courses.forEach(course => { %>
+      <a href="/courses/<%= course.id %>">
+        <img src="<%= course.imgdir %>">
+        <h2><%= course.name %></h2>
+      </a>
+    <% }); %>
   </body>
 </html>

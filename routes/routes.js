@@ -31,4 +31,7 @@ routes.get("/user/:username", verifyToken, PagesController.renderUserPage);
 // Route to update user data
 routes.put("/user/:username", verifyToken, UserManager.updateUser)
 
+// Route to access any course page
+routes.get("/courses/:id", verifyToken, renderCoursePage)
+
 export { routes };
