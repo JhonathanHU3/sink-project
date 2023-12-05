@@ -4,6 +4,7 @@ CREATE TABLE users (
     username VARCHAR(30) UNIQUE NOT NULL CHECK (username !~ ' '),
     email VARCHAR(255) UNIQUE NOT NULL,
     password TEXT NOT NULL,
+    xp INT NOT NULL DEFAULT 0,
     profileimagedir VARCHAR(150) NOT NULL,
     signed BOOLEAN DEFAULT TRUE,
     moduleshistory TEXT,

@@ -16,8 +16,9 @@ export const renderRegisterPage = (req, res) => {
 };
 
 // Function to render homepage
-export const renderHomePage = (req, res) => {
+export const renderHomePage = async (req, res) => {
   const user = req.user;
+  const courses = await getAllCoursesInDb();
   return res.render("home", { user });
 };
 
