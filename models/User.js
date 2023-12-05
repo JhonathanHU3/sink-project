@@ -1,19 +1,14 @@
 import { sql } from "../database/db.js";
 
-export const registerUserInDb = async (
-  userId,
-  fullName,
-  username,
-  userEmail,
-  profilePhotoDir,
-  hashedPassword
-) => {
+// Inserting new user into the database
+export const registerUserInDb = async (userId, fullName, username, userEmail, profilePhotoDir, hashedPassword) => {
   await sql`
     INSERT INTO users(id, fullname, username, email, password, profileimagedir)
     VALUES (${userId}, ${fullName}, ${username}, ${userEmail}, ${hashedPassword}, ${profilePhotoDir});
     `;
 };
 
+// Getting data from an existing user
 export const getUserInDb = async (userData, searchType) => {
   try {
     return await sql`SELECT * FROM users WHERE ${sql(searchType)} = ${userData}`;
@@ -22,9 +17,10 @@ export const getUserInDb = async (userData, searchType) => {
   }
 };
 
-export const updateUserInDb = async (userData) => {
+// Updating data for an existing user
+export const updateUserInDb = async (userData, oldUsername) => {
   return await sql`UPDATE users SET username = ${userData.username}, fullname = ${userData.name}, profileimagedir = ${userData.profileimagedir}
-  WHERE username = ${req.user.username} RETURNING *;`
+  WHERE username = ${oldUsername} RETURNING *;`
 }
 
 

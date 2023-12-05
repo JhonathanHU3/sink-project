@@ -5,7 +5,7 @@ import bcrypt from "bcrypt";
 import * as User from "../models/User.js";
 import { sql } from "../database/db.js";
 
-// Function to obtain user data and generate a unique ID, random profile photo and then save it to the database
+// Function to obtain user data and generate a unique ID, random profile photo and then save it in the database
 export const registerUser = async (req, res) => {
   const userId = randomUUID();
   const profilePhotoDir = `/img/profileImg/${Math.ceil(
@@ -14,8 +14,9 @@ export const registerUser = async (req, res) => {
   const fullName = req.body.fullname;
   const username = req.body.username;
   const userEmail = req.body.email;
-  const hashedPassword = await bcrypt.hash(req.body.password, 10);
 
+  // generating a hashed password to save in the database
+  const hashedPassword = await bcrypt.hash(req.body.password, 10);
   try {
     await User.registerUserInDb(
       userId,
@@ -32,12 +33,16 @@ export const registerUser = async (req, res) => {
   }
 };
 
+// Function to login the user and provide a jwt token in the user's browser
 export const loginUser = async (req, res) => {
   const userEmail = req.body.email;
   const userPassword = req.body.password;
 
+  // getting user data from database
   let [user] = await User.getUserInDb(userEmail, "email");
+
   if (user) {
+    // checking hashed password with bcrypt
     const passwordCheck = await bcrypt.compare(userPassword, user.password);
 
     if (passwordCheck) {
@@ -46,9 +51,12 @@ export const loginUser = async (req, res) => {
         user.username,
         user.profileimagedir
       );
+
+      // saving the generated JWT token in the user's browser cookies
       res.cookie("token", token, {
         httpOnly: true,
       });
+
       console.log("logado");
       return res.redirect("/home");
     }
@@ -58,31 +66,38 @@ export const loginUser = async (req, res) => {
   }
 };
 
+// Function to update a logged in user data
 export const updateUser = async (req, res) => {
   try {
-    const [userInDb] = User.getUserInDb(req.body.userId);
+    // getting user data saved in database
+    const [userInDb] = await User.getUserInDb(req.user.userId, 'id');
+
     if (userInDb) {
+      // checking hashed password with bcrypt
       const passwordCheck = await bcrypt.compare(
         req.body.password,
         userInDb.password
       );
-
       if (passwordCheck) {
-        console.log(req.body)
-        const updatedUserData = await User.updateUserInDb(req.body);
+        // upadating user data in the database
+        const [updatedUserData] = await User.updateUserInDb(req.body, userInDb.username);
+
+        // cleaning old JWT token
         res.clearCookie("token");
 
+        // generating new JWT token with updated credentials
         const token = await tokenGeneration(
           updatedUserData.id,
           updatedUserData.username,
           updatedUserData.profileimagedir
         );
 
+        // saving the generated JWT token in the user's browser cookies
         res.cookie("token", token, {
           httpOnly: true,
         });
 
-        return res.redirect(`/user/${updatedUser.username}`);
+        return res.redirect(`/user/${updatedUserData.username}`);
       }
     }
   } catch (err) {

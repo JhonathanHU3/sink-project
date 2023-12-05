@@ -22,6 +22,7 @@ routes.get("/home", verifyToken, PagesController.renderHomePage);
 
 // Route to access any user page
 routes.get("/user/:username", verifyToken, PagesController.renderUserPage);
+// Route to update user data
 routes.put("/user/:username", verifyToken, UserManager.updateUser)
 
 export { routes };

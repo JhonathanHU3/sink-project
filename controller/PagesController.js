@@ -23,15 +23,16 @@ export const renderHomePage = (req, res) => {
 
 // Rendering userpage with user credentials
 export const renderUserPage = async (req, res) => {
-  const loggedInUser = req.user.userId;
-  const [user] = await User.getUserInDb(req.params.username, "username");  
+  const loggedInUserId = req.user.userId;
+
+  // getting user data in database
+  const [user] = await User.getUserInDb(req.params.username, "username");
   if (user) {
-    if (loggedInUser === user.id) {
+    // checking if the user has permission to edit the profile visited
+    if (loggedInUserId === user.id) {
       const canEdit = true;
-      
       return res.render("profile", { user, canEdit });
     }
-
     const canEdit = false;
     return res.render("profile", { user, canEdit });
   } else {
