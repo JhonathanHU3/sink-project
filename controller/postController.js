@@ -15,10 +15,13 @@ export const submitPost = async (req, res) => {
   const { title, content, userId, classId } = req.body;
 
   try {
+    // Checking for null or undefined values
+
     if (!title || !content || !userId || !classId) {
       throw new Error('Valores inválidos para criar postagem');
     }
 
+    // Adding the new post to the database
     const newPost = await PostModel.createPost(title, content, userId, classId);
     res.redirect(`/posts`);
   } catch (error) {
@@ -27,9 +30,11 @@ export const submitPost = async (req, res) => {
   }
 };
 
+// Filtering posts by CourseId
 export const showPostsByClassId = async (req, res) => {
   const classId = req.params.classId;
 
+  // getting these posts from database
   try {
     const posts = await PostModel.getPostsByClassId(classId);
     res.render('posts', { posts });

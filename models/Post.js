@@ -1,5 +1,6 @@
 import { sql } from "../database/db.js";
 
+// Getting all posts from database
 export const getAllPosts = async () => {
   try {
     const posts = await sql`SELECT * FROM posts`;
@@ -10,9 +11,15 @@ export const getAllPosts = async () => {
   }
 };
 
-export const createPost = async (title, content, userId, classId) => {
+
+// Create a new post in the database
+export const createPost = async (title, content, userId, classId,) => {
   try {
-    const result = await sql`INSERT INTO posts (title, content, userid, classid) VALUES (${title}, ${content}, ${userId}, ${classId}) RETURNING *`;
+    const result = await sql`
+    INSERT INTO posts (title, content, userid, classid) 
+    VALUES (${title}, ${content}, ${userId}, ${classId}) 
+    RETURNING *;`;
+
     return result[0];
   } catch (error) {
     console.error(error);
@@ -20,6 +27,7 @@ export const createPost = async (title, content, userId, classId) => {
   }
 };
 
+// Getting posts by CourseId
 export const getPostsByClassId = async (classId) => {
   try {
     if (classId === undefined) {
