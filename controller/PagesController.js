@@ -44,5 +44,10 @@ export const renderUserPage = async (req, res) => {
 };
 
 // Rendering courses pages with all disponibility modules
-export let renderCoursePage;
+export const renderCoursePage = async (req, res) => {
+  const courseData = await Courses.getCourseData(req.params.id);
 
+  console.log(courseData)
+
+  return res.render("course");
+};

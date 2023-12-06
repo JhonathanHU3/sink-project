@@ -32,6 +32,6 @@ routes.get("/user/:username", verifyToken, PagesController.renderUserPage);
 routes.put("/user/:username", verifyToken, UserManager.updateUser)
 
 // Route to access any course page
-routes.get("/courses/:id", verifyToken, renderCoursePage)
+routes.get("/courses/:id", verifyToken, PagesController.renderCoursePage)
 
 export { routes };
