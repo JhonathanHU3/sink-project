@@ -46,8 +46,18 @@ export const renderUserPage = async (req, res) => {
 // Rendering courses pages with all disponibility modules
 export const renderCoursePage = async (req, res) => {
   const courseData = await Courses.getCourseData(req.params.id);
+  const user = req.user;
 
-  console.log(courseData)
+  return res.render("course", { courseData, user });
+};
 
-  return res.render("course");
+// Rendering video page of any course
+export const renderVideoPage = async (req, res) => {
+  const videoId = req.params.id;
+  const videoData = await Courses.getVideoData(videoId);
+  const user = req.user;
+
+  const videoLink = await Courses.getVideoSignedUrl(videoId);
+
+  return res.render("video", { user, videoData, videoLink});
 };
