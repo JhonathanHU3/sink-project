@@ -37,17 +37,17 @@ export const getCourseData = (courseId) => {
   }
 }
 
-export const getVideoData = (videoId) => {
+export const getVideoData = async (videoId) => {
   try {
-    const [videoData] = sql`SELECT * FROM videos WHERE id = ${videoId};`;
+    const [videoData] = await sql`SELECT * FROM videos WHERE id = ${videoId};`;
     return videoData;
   } catch (err) {
     console.log(err);
   }
 }
 
-export const getVideoSignedUrl = (videoId) => {
-  const { data, error } = supabase.storage
+export const getVideoSignedUrl = async (videoId) => {
+  const { data, error } = await supabase.storage
     .from("sink-videos") 
     .createSignedUrl(`videos/${videoId}`, 120); 
 
@@ -55,6 +55,5 @@ export const getVideoSignedUrl = (videoId) => {
     console.error("Error getting signed URL:", error.message);
     return null;
   }
-
   return data.signedUrl;
 }

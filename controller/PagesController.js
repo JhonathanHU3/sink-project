@@ -54,10 +54,10 @@ export const renderCoursePage = async (req, res) => {
 // Rendering video page of any course
 export const renderVideoPage = async (req, res) => {
   const videoId = req.params.id;
+
   const videoData = await Courses.getVideoData(videoId);
   const user = req.user;
-
   const videoLink = await Courses.getVideoSignedUrl(videoId);
 
-  return res.render("video", { user, videoData, videoLink});
+  return res.render("video", { user, videoData, videoLink });
 };

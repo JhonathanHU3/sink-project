@@ -23,4 +23,15 @@ export const updateUserInDb = async (userData, oldUsername) => {
   WHERE username = ${oldUsername} RETURNING *;`
 }
 
-
+// Increasing XP for the user
+export const addXpToUser = async (username, gainedXp) => {
+  try {
+    return await sql`
+    UPDATE users
+    SET xp = xp + ${username}
+    WHERE username = ${gainedXp};
+    `;
+  } catch (err) {
+    console.error(err);
+  }
+}
