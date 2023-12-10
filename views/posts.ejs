@@ -95,8 +95,9 @@
       <tr>
         <th>Título</th>
         <th>Conteúdo</th>
-        <th>User ID</th>
-        <th>Class ID</th>
+        <th>Usuario</th>
+        <th></th>
+        <th>Data</th>
       </tr>
     </thead>
     <tbody>
@@ -104,8 +105,9 @@
         <tr>
           <td><a class="forum-link" href="/posts/open/<%= post.id %>"><%= post.title %></a></td>
           <td><%= post.content %></td>
-          <td><%= post.userid %></td>
-          <td><%= post.classid %></td>
+          <td><%= post.username %></td>
+          <td><img src="<%= post.profileimagedir %>" alt='' width="50" height="50"></td>
+          <td><%= post.post_date.toISOString().split('T')[0] %></td>
         </tr>
       <% }); %>
     </tbody>
