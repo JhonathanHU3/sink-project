@@ -2,7 +2,10 @@ import { sql } from "../database/db.js";
 
 export const getAllPosts = async () => {
   try {
-    const posts = await sql`SELECT * FROM posts`;
+    const posts = await sql`
+      SELECT posts.*, users.username, users.profileimagedir
+      FROM posts
+      JOIN users ON posts.user_id = users.id`;
     return posts;
   } catch (error) {
     console.error(error);
@@ -12,7 +15,15 @@ export const getAllPosts = async () => {
 
 export const createPost = async (title, content, userId, classId,) => {
   try {
+<<<<<<< Updated upstream
     const result = await sql`INSERT INTO posts (title, content, userid, classid) VALUES (${title}, ${content}, ${userId}, ${classId}) RETURNING *`;
+=======
+    const result = await sql`
+    INSERT INTO posts (title, content, user_id, class_id) 
+    VALUES (${title}, ${content}, ${userId}, ${classId}) 
+    RETURNING *;`;
+
+>>>>>>> Stashed changes
     return result[0];
   } catch (error) {
     console.error(error);

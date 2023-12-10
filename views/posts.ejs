@@ -51,8 +51,8 @@
       <tr>
         <th>Título</th>
         <th>Conteúdo</th>
-        <th>User ID</th>
-        <th>Class ID</th>
+        <th>Username</th>
+        <th>Data de publicação</th>
       </tr>
     </thead>
     <tbody>
@@ -60,8 +60,9 @@
         <tr>
           <td><%= post.title %></td>
           <td><%= post.content %></td>
-          <td><%= post.userid %></td>
-          <td><%= post.classid %></td>
+          <td><%= post.username %></td>
+          <td><img src="<%= post.profileimagedir %>" alt="<%= post.username %>'s profile image" width="50" height="50"></td>
+          <td><%= post.post_date.toISOString().split('T')[0] %></td>
         </tr>
       <% }); %>
     </tbody>

@@ -3,3 +3,12 @@ node_modules/
 
 # dotenv environment variable files
 .env
+database/db.sql
+models/Post.js
+views/posts.ejs
+routes/routes.js
+models/Post.js
+database/db.sql
+database/db.sql
+views/posts.ejs
+database/db.sql
