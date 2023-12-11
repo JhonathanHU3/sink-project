@@ -31,6 +31,7 @@ CREATE TABLE videos (
     title VARCHAR(120) NOT NULL,
     description VARCHAR(500) NOT NULL, 
     imgdir VARCHAR(120) NOT NULL,
+    xp_earned INT NOT NULL,
     course_id VARCHAR(25) NOT NULL,
     FOREIGN KEY (course_id) REFERENCES courses (id) 
 );

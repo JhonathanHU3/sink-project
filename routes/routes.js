@@ -41,4 +41,10 @@ routes.get("/courses/:id", verifyToken, PagesController.renderCoursePage);
 // Route to access any videopage
 routes.get("/video/:id", verifyToken, PagesController.renderVideoPage);
 
+// Route to add more xp to a user
+routes.post("/addUserXp", (req, res) => {
+  console.log(req.body);
+  res.send('Xp aceito!');
+})
+
 export { routes };

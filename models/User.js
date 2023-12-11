@@ -20,7 +20,7 @@ export const getUserInDb = async (userData, searchType) => {
 // Updating data for an existing user
 export const updateUserInDb = async (userData, oldUsername) => {
   return await sql`UPDATE users SET username = ${userData.username}, fullname = ${userData.name}, profileimagedir = ${userData.profileimagedir}
-  WHERE username = ${oldUsername} RETURNING *;`
+  WHERE username = ${oldUsername} RETURNING *;` 
 }
 
 // Increasing XP for the user

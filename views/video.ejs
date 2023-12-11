@@ -1,20 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-  </head>
-  <body>
-    <a href="/user/<%= user.username %>">
-        <h1>Hello <%= user.username %></h1>
-  
-        <img src="<%= user.profileImageDir %>" width="100px" height="100px"/>
-  
-      </a>
 
-    <video width="500px" height="500px" controls autoplay src="<%= videoLink %>"></video>
-    <h1><%= videoData.title %></h1>
-    <p><%= videoData.description %></p>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+</head>
+
+<body>
+  <a href="/user/<%= user.username %>">
+    <h1>Hello <%= user.username %>
+    </h1>
+
+    <img src="<%= user.profileImageDir %>" width="100px" height="100px" />
+
+  </a>
+
+  <video data-xp_earned="<%= videoData.xp_earned %>" width="500px" height="500px" controls autoplay
+    src="<%= videoLink %>"></video>
+  <h1>
+    <%= videoData.title %>
+  </h1>
+  <p>
+    <%= videoData.description %>
+  </p>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      let video = document.querySelector("video");
+
+      // Definir o tempo após o qual a requisição POST será feita (em milissegundos)
+      let tempoParaPost = 1000;
+      let postRealizado = false; // Flag para verificar se a requisição já foi realizada
+
+      // Configurar um evento para ser acionado quando o tempo do vídeo for alterado
+      video.addEventListener("timeupdate", function () {
+        // Verificar se o tempo atual do vídeo é maior que o tempo desejado para a requisição POST
+        if (video.currentTime >= tempoParaPost / 1000 && !postRealizado) {
+          // Atrasar a execução do código usando setTimeout
+          setTimeout(function () {
+            // Realizar a requisição POST apenas se ainda não foi realizada
+            if (!postRealizado) {
+              realizarRequisicaoPOST();
+              postRealizado = true; // Marcar a requisição como realizada
+            }
+          }, tempoParaPost);
+        }
+      });
+
+      function realizarRequisicaoPOST() {
+        // Exemplo de dados a serem enviados no corpo da requisição POST
+        let dados = {
+          xp_ganho: parseInt(document.querySelector("video").dataset.xp_earned), // Substitua pelo valor correto de XP ganho pelo usuário
+        };
+
+        const request = new XMLHttpRequest();
+        request.open("POST", "/addUserXp", true);
+        request.setRequestHeader("Content-type", "application/json");
+        request.send(JSON.stringify(dados));
+
+        request.onload = function () {
+          console.log(this.responseText);
+        };
+
+        return request.responseText;
+      }
+    });
+  </script>
+</body>
+
 </html>
