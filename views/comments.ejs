@@ -75,12 +75,14 @@
 <body>
 
   <h2>Post Information:</h2>
-  <p><strong>Title:</strong> <%= post.title %></p>
-  <p><strong>Content:</strong> <%= post.content %></p>
-  <p><strong>User ID:</strong> <%= post.userId %></p>
-
+  <p>Title: <%= post.title %></p>
+  <p>Content: <%= post.content %></p>
+  <p>Username: <%= post.username %></p>
+  <p>Profile Image: <img src="<%= post.profileimagedir %>" alt="<%= post.username %>'s profile image" width="50" height="50"></p>
+  <p>Date: <%= post.new_date %></p>
+  
   <h2>Comments</h2>
-
+  
   <!-- Loop through comments -->
   <table>
     <thead>
@@ -102,7 +104,7 @@
       <% }); %>
     </tbody>
   </table>
-
+  
   <!-- Formulário para adicionar comentário -->
   <form id="comment-form" method="POST" action="/posts/<%= postId %>/comments">
     <label for="content">Content:</label>
@@ -116,7 +118,7 @@
   
     <button type="submit">Add Comment</button>
   </form>
-
-</body>
-</html>
+  
+  </body>
+  </html>
 

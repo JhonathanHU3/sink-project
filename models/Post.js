@@ -44,10 +44,16 @@ export const getPostsByClassId = async (classId) => {
   }
 };
 
+
 export const getPostById = async (postId) => {
   try {
-    const post = await sql`SELECT * FROM posts WHERE id = ${postId}`;
-    return post[0]; 
+    const post = await sql`
+      SELECT posts.*, users.username, users.profileimagedir, TO_CHAR(post_date - INTERVAL '3 hours', 'DD-MM-YYYY HH24:MI') AS new_date
+      FROM posts
+      JOIN users ON posts.user_id = users.id
+      WHERE posts.id = ${postId}`;
+
+    return post[0];
   } catch (error) {
     console.error(error);
     throw new Error('Erro ao obter post por ID');
