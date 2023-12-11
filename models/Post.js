@@ -4,16 +4,15 @@ import { sql } from "../database/db.js";
 export const getAllPosts = async () => {
   try {
     const posts = await sql`
-      SELECT posts.*, users.username, users.profileimagedir
-      FROM posts
-      JOIN users ON posts.user_id = users.id`;
+    SELECT posts.*, users.username, users.profileimagedir, TO_CHAR(post_date - INTERVAL '3 hours', 'DD-MM-YYYY HH24:MI') AS new_date
+    FROM posts
+    JOIN users ON posts.user_id = users.id`;
     return posts;
   } catch (error) {
     console.error(error);
     throw new Error('Erro ao obter postagens');
   }
 };
-
 
 // Create a new post in the database
 export const createPost = async (title, content, userId, classId,) => {
@@ -48,7 +47,7 @@ export const getPostsByClassId = async (classId) => {
 export const getPostById = async (postId) => {
   try {
     const post = await sql`SELECT * FROM posts WHERE id = ${postId}`;
-    return post[0]; // Assumindo que há apenas um post com esse ID
+    return post[0]; 
   } catch (error) {
     console.error(error);
     throw new Error('Erro ao obter post por ID');

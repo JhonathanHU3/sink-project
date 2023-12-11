@@ -86,14 +86,18 @@
     <thead>
       <tr>
         <th>Content</th>
-        <th>User ID</th>
+        <th>User</th>
+        <th>Profile Image</th>
+        <th>Date</th>
       </tr>
     </thead>
     <tbody>
       <% comments.forEach(comment => { %>
         <tr>
           <td><%= comment.content %></td>
-          <td><%= comment.userId %></td>
+          <td><%= comment.username %></td>
+          <td><img src="<%= comment.profileimagedir %>" alt="<%= comment.username %>'s profile image" width="50" height="50"></td>
+          <td><%= comment.new_date %></td>
         </tr>
       <% }); %>
     </tbody>

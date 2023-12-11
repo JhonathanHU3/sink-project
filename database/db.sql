@@ -12,16 +12,16 @@ CREATE TABLE users (
 
 INSERT INTO users (id, fullname, username, email, password, profileimagedir, moduleshistory, created_at, signed)
 VALUES
-  ('1', 'João da Silva', 'joao_silva', 'joao@example.com', 'senha123', '/img/profiles/joao.jpg', NULL, Now(), TRUE),
-  ('2', 'Maria Oliveira', 'maria_oliveira', 'maria@example.com', 'senha456', '/img/profiles/maria.jpg', '1,3,5', NULL, TRUE),
-  ('3', 'Carlos Pereira', 'carlos_pereira', 'carlos@example.com', 'senha789', '/img/profiles/carlos.jpg', NULL, '2023-01-15 08:30:00', TRUE),
-  ('4', 'Ana Souza', 'ana_souza', 'ana@example.com', 'senha987', '/img/profiles/ana.jpg', NULL, Now(), TRUE),
-  ('5', 'Lucas Santos', 'lucas_santos', 'lucas@example.com', 'senha654', '/img/profiles/lucas.jpg', '2,4,6', NULL, FALSE),
-  ('6', 'Fernanda Lima', 'fernanda_lima', 'fernanda@example.com', 'senha321', '/img/profiles/fernanda.jpg', NULL, Now(), TRUE),
-  ('7', 'Ricardo Almeida', 'ricardo_almeida', 'ricardo@example.com', 'senha111', '/img/profiles/ricardo.jpg', NULL, '2023-02-01 12:45:00', TRUE),
-  ('8', 'Patrícia Costa', 'patricia_costa', 'patricia@example.com', 'senha222', '/img/profiles/patricia.jpg', NULL, Now(), TRUE),
-  ('9', 'Daniel Oliveira', 'daniel_oliveira', 'daniel@example.com', 'senha333', '/img/profiles/daniel.jpg', '3,5,7', NULL, FALSE),
-  ('10', 'Amanda Silva', 'amanda_silva', 'amanda@example.com', 'senha444', '/img/profiles/amanda.jpg', NULL, Now(), TRUE);
+  ('1', 'João da Silva', 'joao_silva', 'joao@example.com', 'senha123', '/img/profileImg/7.jpg', NULL, Now(), TRUE),
+  ('2', 'Maria Oliveira', 'maria_oliveira', 'maria@example.com', 'senha456', '/img/profileImg/4.jpg', '1,3,5', NULL, TRUE),
+  ('3', 'Carlos Pereira', 'carlos_pereira', 'carlos@example.com', 'senha789', '/img/profileImg/3.jpg', NULL, '2023-01-15 08:30:00', TRUE),
+  ('4', 'Ana Souza', 'ana_souza', 'ana@example.com', 'senha987', '/img/profileImg/4.jpg', NULL, Now(), TRUE),
+  ('5', 'Lucas Santos', 'lucas_santos', 'lucas@example.com', 'senha654', '/img/profileImg/5.jpg', '2,4,6', NULL, FALSE),
+  ('6', 'Fernanda Lima', 'fernanda_lima', 'fernanda@example.com', 'senha321', '/img/profileImg/6.jpg', NULL, Now(), TRUE),
+  ('7', 'Ricardo Almeida', 'ricardo_almeida', 'ricardo@example.com', 'senha111', '/img/profileImg/2.jpg', NULL, '2023-02-01 12:45:00', TRUE),
+  ('8', 'Patrícia Costa', 'patricia_costa', 'patricia@example.com', 'senha222', '/img/profileImg/7.jpg', NULL, Now(), TRUE),
+  ('9', 'Daniel Oliveira', 'daniel_oliveira', 'daniel@example.com', 'senha333', '/img/profileImg/4.jpg', '3,5,7', NULL, FALSE),
+  ('10', 'Amanda Silva', 'amanda_silva', 'amanda@example.com', 'senha444', '/img/profileImg/10.jpg', NULL, Now(), TRUE);
 
 CREATE TABLE courses (
     id VARCHAR(25) PRIMARY KEY UNIQUE NOT NULL,
@@ -67,4 +67,3 @@ CREATE TABLE comments (
     FOREIGN KEY (user_id) REFERENCES users (id) 
 
 );
-

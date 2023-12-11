@@ -3,7 +3,11 @@ import { sql } from "../database/db.js";
 
 export const getCommentsByPostId = async (postId) => {
   try {
-    const comments = await sql`SELECT * FROM comments WHERE post_Id = ${postId}`;
+    const comments = await sql`
+      SELECT comments.*, users.username, users.profileimagedir, TO_CHAR(post_date - INTERVAL '3 hours', 'DD-MM-YYYY HH24:MI') AS new_date
+      FROM comments
+      JOIN users ON comments.user_id = users.id
+      WHERE post_id = ${postId}`;
     return comments;
   } catch (error) {
     console.error(error);
@@ -18,7 +22,7 @@ export const createComment = async (postId, content, userId) => {
     }
 
     const result = await sql`
-      INSERT INTO comments (post_Id, content, user_Id)
+      INSERT INTO comments (post_id, content, user_id)
       VALUES (${postId}, ${content}, ${userId})
       RETURNING *
     `;

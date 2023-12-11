@@ -107,7 +107,7 @@
           <td><%= post.content %></td>
           <td><%= post.username %></td>
           <td><img src="<%= post.profileimagedir %>" alt='' width="50" height="50"></td>
-          <td><%= post.post_date.toISOString().split('T')[0] %></td>
+          <td><%= post.new_date %></td>
         </tr>
       <% }); %>
     </tbody>
