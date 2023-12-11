@@ -3,7 +3,6 @@ import { randomUUID } from "node:crypto";
 import { tokenGeneration } from "./TokenController.js";
 import bcrypt from "bcrypt";
 import * as User from "../models/User.js";
-import { sql } from "../database/db.js";
 
 // Function to obtain user data and generate a unique ID, random profile photo and then save it in the database
 export const registerUser = async (req, res) => {
@@ -104,3 +103,19 @@ export const updateUser = async (req, res) => {
     console.log(err);
   }
 };
+
+
+export const addXpToUser = async (req, res) => {
+  const videoData = req.body;
+  const userId = req.user.userId;
+  
+  const verifiedUserData = await User.checkIfUserHasSeenThisVideo(userId, videoData.videoId);
+  console.log(verifiedUserData);
+  if(!verifiedUserData) {
+    const updatedUserMsg = await User.updateUserXp(userId, videoData.earnedXp);
+    console.log(updatedUserMsg);
+    const updatedModule =  await User.addVideoToHistory(userId, videoData.videoId);
+    console.log(updatedModule);
+  }
+
+}

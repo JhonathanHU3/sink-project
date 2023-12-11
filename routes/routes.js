@@ -42,9 +42,6 @@ routes.get("/courses/:id", verifyToken, PagesController.renderCoursePage);
 routes.get("/video/:id", verifyToken, PagesController.renderVideoPage);
 
 // Route to add more xp to a user
-routes.post("/addUserXp", (req, res) => {
-  console.log(req.body);
-  res.send('Xp aceito!');
-})
+routes.post("/addUserXp", verifyToken, UserManager.addXpToUser)
 
 export { routes };

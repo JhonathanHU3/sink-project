@@ -16,7 +16,7 @@
 
   </a>
 
-  <video data-xp_earned="<%= videoData.xp_earned %>" width="500px" height="500px" controls autoplay
+  <video data-xp_earned="<%= videoData.xp_earned %>" data-video_id="<%= videoData.id %>" width="500px" height="500px" controls autoplay
     src="<%= videoLink %>"></video>
   <h1>
     <%= videoData.title %>
@@ -50,14 +50,15 @@
 
       function realizarRequisicaoPOST() {
         // Exemplo de dados a serem enviados no corpo da requisição POST
-        let dados = {
-          xp_ganho: parseInt(document.querySelector("video").dataset.xp_earned), // Substitua pelo valor correto de XP ganho pelo usuário
+        let body = {
+          videoId: video.dataset.video_id,
+          earnedXp: parseInt(video.dataset.xp_earned), // Substitua pelo valor correto de XP ganho pelo usuário
         };
 
         const request = new XMLHttpRequest();
         request.open("POST", "/addUserXp", true);
         request.setRequestHeader("Content-type", "application/json");
-        request.send(JSON.stringify(dados));
+        request.send(JSON.stringify(body));
 
         request.onload = function () {
           console.log(this.responseText);
