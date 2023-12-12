@@ -5,8 +5,11 @@ export const showCommentsByPostId = async (req, res) => {
   const { postId } = req.params;
 
   try {
+  
     const post = await PostModel.getPostById(postId);
+
     const comments = await CommentModel.getCommentsByPostId(postId);
+
     res.render('comments', { postId, post, comments });
   } catch (error) {
     console.error(error);
