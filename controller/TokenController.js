@@ -4,8 +4,8 @@ import "dotenv/config";
 // secret key to configure a JWT sign
 let { SECRET } = process.env;
 
-async function tokenGeneration(userId, username, profileImageDir) {
-  return await jwt.sign({ userId, username, profileImageDir}, SECRET, { expiresIn: "1h" });
+async function tokenGeneration(userId, username, profileImageDir, xp) {
+  return await jwt.sign({ userId, username, profileImageDir, xp }, SECRET, { expiresIn: "1h" });
 }
 
 // checking the jwt "token" to give the user access

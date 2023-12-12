@@ -9,8 +9,8 @@
 
 <body>
   <a href="/user/<%= user.username %>">
-    <h1>Hello <%= user.username %>
-    </h1>
+    <h1>Hello <%= user.username %> </h1>
+    <p id="userXp">xp: <%= user.xp %></p>
 
     <img src="<%= user.profileImageDir %>" width="100px" height="100px" />
 
@@ -61,7 +61,12 @@
         request.send(JSON.stringify(body));
 
         request.onload = function () {
-          console.log(this.responseText);
+          if(JSON.parse(this.responseText).xp !== undefined) {
+            const userXpParagraph = document.querySelector("#userXp");
+            userXpParagraph.innerHTML = JSON.parse(this.responseText).xp;
+          } else {
+            console.log(this.responseText)
+          };
         };
 
         return request.responseText;

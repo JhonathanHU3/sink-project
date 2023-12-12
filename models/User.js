@@ -42,7 +42,7 @@ export const updateUserXp = (userId, videoXp) => {
     UPDATE users
     SET xp = xp + ${videoXp}
     WHERE id = ${userId}
-    RETURNING xp;
+    RETURNING *;
     `;
   } catch (err) {
     console.log(err)
@@ -50,12 +50,10 @@ export const updateUserXp = (userId, videoXp) => {
 }
 
 export const addVideoToHistory = (userId, videoId) => {
-  videoId =`${videoId}, `
-  console.log(videoId)
   try {
     return sql`
     UPDATE users
-    SET moduleshistory = moduleshistory || ${videoId}
+    SET moduleshistory = COALESCE(moduleshistory, '') || ${videoId + ';'}
     WHERE id = ${userId}
     RETURNING moduleshistory;`
   } catch (error) {
@@ -66,10 +64,10 @@ export const addVideoToHistory = (userId, videoId) => {
 export const checkIfUserHasSeenThisVideo = async (userId, videoId) => {
   try {
     const [query] = await sql`
-    SELECT *
+    SELECT moduleshistory
     FROM users
     WHERE id = ${userId}
-      AND array_position(string_to_array(moduleshistory, ','), ${videoId}) IS NOT NULL;
+      AND array_position(string_to_array(moduleshistory, ';'), ${videoId}) IS NOT NULL;
     `;
 
     return query;

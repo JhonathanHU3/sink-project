@@ -6,7 +6,7 @@ import {
   submitPost,
   showAllPosts,
   showPostsByClassId,
-} from "../controller/PostController.js";
+} from "../controller/postController.js";
 import { verifyToken } from "../controller/TokenController.js";
 import cookieParser from "cookie-parser";
 
