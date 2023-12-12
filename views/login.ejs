@@ -3,13 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="style/login.css">
+    <title>SINK LOGIN</title>
 </head>
 <body>
-    <form action="/login" method="post">
-        <input type="text" name="email" id="email" placeholder="Insira seu email">
-        <input type="password" name="password" id="password" placeholder="Insira sua senha">
-        <button id="addButton" type="submit">></button>
-    </form>
+    
+    <div class="pag-login">
+
+
+        <form action="/login" method="post">
+            
+            <label for="user">Email:</label>
+                <input type="text" id="user" name="email" placeholder="Seu email">
+                <br>
+
+            <label for="password">Senha:</label>    
+                <input type="password" name="password" id="password" placeholder="password">
+                <br>
+
+            <button type="submit">LOGIN</button>
+            <br>
+
+            <a href="/register">Ainda não tem conta? Cadastre-se</a>
+        </form>
+
+        <div class="login_pic">
+            <img src="./img/login_icon.jpg" alt="" srcset="">
+        </div>
+
+    </div>
 </body>
 </html>

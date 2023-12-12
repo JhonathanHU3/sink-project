@@ -6,6 +6,11 @@ export const renderIndex = (req, res) => {
   return res.render("index");
 };
 
+// Function to render the static index page
+export const rederCoursePage = (req, res) => {
+  return res.render("courses");
+};
+
 // Function to render the static register page
 export const renderLoginPage = (req, res) => {
   return res.render("login");

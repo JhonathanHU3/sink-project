@@ -16,6 +16,7 @@ routes.use(cookieParser());
 
 // Routes to render static pages
 routes.get("/", PagesController.renderIndex);
+routes.get("/courses", PagesController.rederCoursePage)
 routes.get("/register", PagesController.renderRegisterPage);
 routes.get("/login", PagesController.renderLoginPage);
 
@@ -25,14 +26,9 @@ routes.post("/login", UserManager.loginUser);
 
 
 // Routes to Create, Get, and Get by Course ID Forum Posts
-routes.get("/posts", showAllPosts);
+routes.get("/forum", showAllPosts);
 routes.post("/posts", submitPost);
 routes.get("/posts/:classId", showPostsByClassId);
-
-
-routes.get('/posts', showAllPosts);
-routes.post('/posts', submitPost);
-routes.get('/posts/:classId', showPostsByClassId);
 
 // Routes for comments
 routes.get('/posts/open/:postId', showCommentsByPostId);
