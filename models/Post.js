@@ -3,7 +3,15 @@ import { sql } from "../database/db.js";
 // Getting all posts from database
 export const getAllPosts = async () => {
   try {
+<<<<<<< Updated upstream
     const posts = await sql`SELECT * FROM posts`;
+=======
+    const posts = await sql`
+      SELECT posts.*, users.username, users.profileimagedir, TO_CHAR(post_date - INTERVAL '3 hours', 'DD-MM-YYYY HH24:MI') AS new_date
+      FROM posts
+      JOIN users ON posts.user_id = users.id
+      ORDER BY post_date DESC`; 
+>>>>>>> Stashed changes
     return posts;
   } catch (error) {
     console.error(error);
@@ -34,7 +42,18 @@ export const getPostsByClassId = async (classId) => {
       throw new Error('classId não pode ser undefined');
     }
     classId = classId.substring(1);
+<<<<<<< Updated upstream
     const posts = await sql`SELECT * FROM posts WHERE classid = ${classId}`;
+=======
+    
+    const posts = await sql`
+      SELECT posts.*, users.username, users.profileimagedir, TO_CHAR(post_date - INTERVAL '3 hours', 'DD-MM-YYYY HH24:MI') AS new_date
+      FROM posts
+      JOIN users ON posts.user_id = users.id
+      WHERE class_id = ${classId}
+      ORDER BY post_date DESC`;
+
+>>>>>>> Stashed changes
     return posts;
   } catch (error) {
     console.error(error);
