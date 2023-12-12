@@ -4,9 +4,10 @@ import { sql } from "../database/db.js";
 export const getAllPosts = async () => {
   try {
     const posts = await sql`
-    SELECT posts.*, users.username, users.profileimagedir, TO_CHAR(post_date - INTERVAL '3 hours', 'DD-MM-YYYY HH24:MI') AS new_date
-    FROM posts
-    JOIN users ON posts.user_id = users.id`;
+      SELECT posts.*, users.username, users.profileimagedir, TO_CHAR(post_date - INTERVAL '3 hours', 'DD-MM-YYYY HH24:MI') AS new_date
+      FROM posts
+      JOIN users ON posts.user_id = users.id
+      ORDER BY post_date DESC`; // Adiciona a cláusula ORDER BY para ordenar por data decrescente
     return posts;
   } catch (error) {
     console.error(error);
