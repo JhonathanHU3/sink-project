@@ -1,5 +1,6 @@
 // Imports
 import { Router } from "express";
+import { submitComment, showCommentsByPostId } from "../controller/commentsController.js";
 import * as UserManager from "../controller/UserManager.js";
 import * as PagesController from "../controller/PagesController.js";
 import {
@@ -22,10 +23,21 @@ routes.get("/login", PagesController.renderLoginPage);
 routes.post("/register", UserManager.registerUser);
 routes.post("/login", UserManager.loginUser);
 
+
 // Routes to Create, Get, and Get by Course ID Forum Posts
 routes.get("/posts", showAllPosts);
 routes.post("/posts", submitPost);
 routes.get("/posts/:classId", showPostsByClassId);
+
+
+routes.get('/posts', showAllPosts);
+routes.post('/posts', submitPost);
+routes.get('/posts/:classId', showPostsByClassId);
+
+// Routes for comments
+routes.get('/posts/open/:postId', showCommentsByPostId);
+routes.post('/posts/:postId/comments', submitComment);
+
 
 // Home page route with token verification
 routes.get("/home", verifyToken, PagesController.renderHomePage);
