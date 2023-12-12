@@ -3,7 +3,11 @@ import { Router } from "express";
 import { submitComment, showCommentsByPostId } from "../controller/commentsController.js";
 import * as UserManager from "../controller/UserManager.js";
 import * as PagesController from "../controller/PagesController.js";
-import { submitPost, showAllPosts, showPostsByClassId } from "../controller/PostController.js";
+import {
+  submitPost,
+  showAllPosts,
+  showPostsByClassId,
+} from "../controller/postController.js";
 import { verifyToken } from "../controller/TokenController.js";
 import cookieParser from "cookie-parser";
 
@@ -21,11 +25,14 @@ routes.post("/login", UserManager.loginUser);
 
 
 // Routes to Create, Get, and Get by Course ID Forum Posts
+routes.get("/posts", showAllPosts);
+routes.post("/posts", submitPost);
+routes.get("/posts/:classId", showPostsByClassId);
+
 
 routes.get('/posts', showAllPosts);
 routes.post('/posts', submitPost);
 routes.get('/posts/:classId', showPostsByClassId);
-
 
 // Routes for comments
 routes.get('/posts/open/:postId', showCommentsByPostId);
@@ -38,6 +45,15 @@ routes.get("/home", verifyToken, PagesController.renderHomePage);
 // Route to access any user page
 routes.get("/user/:username", verifyToken, PagesController.renderUserPage);
 // Route to update user data
-routes.put("/user/:username", verifyToken, UserManager.updateUser)
+routes.put("/user/:username", verifyToken, UserManager.updateUser);
+
+// Route to access any course page
+routes.get("/courses/:id", verifyToken, PagesController.renderCoursePage);
+
+// Route to access any videopage
+routes.get("/video/:id", verifyToken, PagesController.renderVideoPage);
+
+// Route to add more xp to a user
+routes.post("/addUserXp", verifyToken, UserManager.addXpToUser)
 
 export { routes };

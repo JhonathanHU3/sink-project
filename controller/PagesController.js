@@ -1,4 +1,5 @@
 import * as User from "../models/User.js";
+import * as Courses from "../models/Courses.js";
 
 // Function to render the static index page
 export const renderIndex = (req, res) => {
@@ -16,9 +17,10 @@ export const renderRegisterPage = (req, res) => {
 };
 
 // Function to render homepage
-export const renderHomePage = (req, res) => {
+export const renderHomePage = async (req, res) => {
   const user = req.user;
-  return res.render("home", { user });
+  const courses = await Courses.getAllCoursesInDb();
+  return res.render("home", { user, courses });
 };
 
 // Rendering userpage with user credentials
@@ -39,4 +41,23 @@ export const renderUserPage = async (req, res) => {
     console.log("Erro: usuário não encontrado");
     return res.redirect("/home");
   }
+};
+
+// Rendering courses pages with all disponibility modules
+export const renderCoursePage = async (req, res) => {
+  const courseData = await Courses.getCourseData(req.params.id);
+  const user = req.user;
+
+  return res.render("course", { courseData, user });
+};
+
+// Rendering video page of any course
+export const renderVideoPage = async (req, res) => {
+  const videoId = req.params.id;
+
+  const videoData = await Courses.getVideoData(videoId);
+  const user = req.user;
+  const videoLink = await Courses.getVideoSignedUrl(videoId);
+
+  return res.render("video", { user, videoData, videoLink });
 };

@@ -3,7 +3,6 @@ import { randomUUID } from "node:crypto";
 import { tokenGeneration } from "./TokenController.js";
 import bcrypt from "bcrypt";
 import * as User from "../models/User.js";
-import { sql } from "../database/db.js";
 
 // Function to obtain user data and generate a unique ID, random profile photo and then save it in the database
 export const registerUser = async (req, res) => {
@@ -49,7 +48,8 @@ export const loginUser = async (req, res) => {
       const token = await tokenGeneration(
         user.id,
         user.username,
-        user.profileimagedir
+        user.profileimagedir,
+        user.xp
       );
 
       // saving the generated JWT token in the user's browser cookies
@@ -89,7 +89,8 @@ export const updateUser = async (req, res) => {
         const token = await tokenGeneration(
           updatedUserData.id,
           updatedUserData.username,
-          updatedUserData.profileimagedir
+          updatedUserData.profileimagedir,
+          updatedUserData.xp
         );
 
         // saving the generated JWT token in the user's browser cookies
@@ -104,3 +105,36 @@ export const updateUser = async (req, res) => {
     console.log(err);
   }
 };
+
+
+export const addXpToUser = async (req, res) => {
+  const videoData = req.body;
+  const userId = req.user.userId;
+
+  const verifiedUserData = await User.checkIfUserHasSeenThisVideo(userId, videoData.videoId);
+  console.log(verifiedUserData);
+  if (!verifiedUserData) {
+    const [user] = await User.updateUserXp(userId, videoData.earnedXp);
+    await User.addVideoToHistory(userId, videoData.videoId);
+
+    // cleaning old JWT token
+    res.clearCookie("token");
+
+    // generating new JWT token with updated credentials
+    const token = await tokenGeneration(
+      user.id,
+      user.username,
+      user.profileimagedir,
+      user.xp
+    );
+
+    // saving the generated JWT token in the user's browser cookies
+    res.cookie("token", token, {
+      httpOnly: true,
+    });
+
+    return res.status(200).json({ xp: user.xp });
+  } else {
+    return res.status(400).json({ error: 'Usuário já viu este vídeo' });
+  }
+}

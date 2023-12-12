@@ -4,6 +4,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import { routes } from "./routes/routes.js";
 import methodOverride  from "method-override";
+import bodyParser from "body-parser";
 
 const app = express();
 
@@ -18,7 +19,8 @@ const __dirname = path.dirname(__filename);
 app.use(methodOverride('_method'))
 app.set("view engine", "ejs");
 app.use(express.static(path.join(__dirname, "public")));
-app.use(express.urlencoded());
+app.use(express.urlencoded({ extended: true }))
+app.use(bodyParser.json())
 app.use(routes);
 
 // Starting the server on the locally defined port or the server defined port
