@@ -35,8 +35,15 @@ export const getPostsByClassId = async (classId) => {
     if (classId === undefined) {
       throw new Error('classId não pode ser undefined');
     }
+
     classId = classId.substring(1);
-    const posts = await sql`SELECT * FROM posts WHERE class_id = ${classId}`;
+
+    const posts = await sql`
+      SELECT posts.*, users.username, users.profileimagedir, TO_CHAR(post_date - INTERVAL '3 hours', 'DD-MM-YYYY HH24:MI') AS new_date
+      FROM posts
+      JOIN users ON posts.user_id = users.id
+      WHERE class_id = ${classId}`;
+
     return posts;
   } catch (error) {
     console.error(error);
