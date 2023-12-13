@@ -1,9 +1,15 @@
 import * as User from "../models/User.js";
 import * as Courses from "../models/Courses.js";
+import * as Post from "../models/Post.js";
 
 // Function to render the static index page
 export const renderIndex = (req, res) => {
   return res.render("index");
+};
+
+// Function to render the static index page
+export const rederCoursePage = (req, res) => {
+  return res.render("courses");
 };
 
 // Function to render the static register page
@@ -30,13 +36,17 @@ export const renderUserPage = async (req, res) => {
   // getting user data in database
   const [user] = await User.getUserInDb(req.params.username, "username");
   if (user) {
+    const userPosts = await Post.getPostsByUserId(user.id)
+    if(!userPosts){
+      userPosts = false;
+    }
     // checking if the user has permission to edit the profile visited
     if (loggedInUserId === user.id) {
       const canEdit = true;
-      return res.render("profile", { user, canEdit });
+      return await res.render("profile", { user, canEdit, userPosts });
     }
     const canEdit = false;
-    return res.render("profile", { user, canEdit });
+    return res.render("profile", { user, canEdit, userPosts });
   } else {
     console.log("Erro: usuário não encontrado");
     return res.redirect("/home");

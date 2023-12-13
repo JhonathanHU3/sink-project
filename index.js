@@ -21,6 +21,9 @@ app.set("view engine", "ejs");
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }))
 app.use(bodyParser.json())
+app.use('/user/', express.static('public'));
+app.use('/courses/', express.static('public'));
+app.use('/video/', express.static('public'));
 app.use(routes);
 
 // Starting the server on the locally defined port or the server defined port
