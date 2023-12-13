@@ -9,6 +9,7 @@ html, body {
     padding: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     overflow-x: hidden;
+    height: 100%;
 }
 
 body {
@@ -59,7 +60,9 @@ form {
     padding-bottom: 50px;
     margin-top: 10vh;
     margin-left: 10vw;
+    margin-right: 8%;
     width: 30%;
+    color: black;
     border-radius: 6px;
 }
 
@@ -78,7 +81,7 @@ form input {
     border-bottom: 3px solid rgb(189, 39, 189);
     border-radius: 3px;
     padding: 1vh;
-    color: aliceblue;
+    color: black;
 }
 
 .btn_cad {
@@ -88,6 +91,7 @@ form input {
 }
 
 .btn_cad button {
+    width: 60%;
     padding: 1.5vh;
     font-weight: 700;
     color: aliceblue;
@@ -95,9 +99,10 @@ form input {
     border: none;
     border-radius: 3px;
     font-size: 2vh;
+    cursor: pointer;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1100px) {
     body {
         background-image: url(../img/cadastro_mob.jpg);
         width: 100vw;
@@ -109,7 +114,8 @@ form input {
         flex-direction: column;
         text-align: center;
         align-items: center;
-        width: 100%;
+        width: 88%;
+        overflow-x: hidden; 
     }
 
     .cad_description {
@@ -118,6 +124,7 @@ form input {
         color: aliceblue;
         text-align: center;
         margin-bottom: 5vh;
+        margin-left: -0.8vh;
     }
 
     .cad_description img {
@@ -142,7 +149,7 @@ form input {
         margin-bottom: 3vh;
         height: 3vh;
         width: 85%;
-        color: aliceblue;
+        color: black;
     }
 
     .btn_cad {
