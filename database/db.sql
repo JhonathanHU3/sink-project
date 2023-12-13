@@ -55,11 +55,11 @@ CREATE TABLE posts (
     id SERIAL PRIMARY KEY,
     user_id TEXT NOT NULL,
     title VARCHAR,
-    class_id VARCHAR(25) NOT NULL,
+    course_id VARCHAR(25) NOT NULL,
     content VARCHAR,
     post_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users (id),
-    FOREIGN KEY (class_id) REFERENCES courses (id)
+    FOREIGN KEY (course_id) REFERENCES courses (id)
 );
 
 CREATE TABLE comments (
@@ -76,5 +76,5 @@ CREATE TABLE comments (
 INSERT INTO videos 
 (id, title, description, imgdir, course_id) VALUES
 ('aula1_lol', 'Como kaitar no League of Legends', 'Hoje iremos ensinar a kaitar no League of Legends', '/img/videosimg/comokaitar.jpg', 'lol'),
-('aula1_dota2', 'Teleporte do vagabundo no DOTA 2', 'Aprenda o teleporte do desgraçado máximo com DinossauroHU3', '/img/videosimg/tpdovagabundo.jpg', 'dota2');
+('aula1_dota2', 'Teleporte do vagabundo no DOTA 2', 'Aprenda o teleporte do desgraçado máximo com DinossauroHU3', '/img/videosimg/tpdovagabundo.jpg', 'cs2');
 
