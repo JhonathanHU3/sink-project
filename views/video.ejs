@@ -18,7 +18,7 @@
         <img src="<%= user.profileImageDir %>" class="perfil"></img>
         <div class="userinfo">
           <p><%= user.username %></p> 
-          <p>XP: <%= user.xp %></p>
+          <p id="userXp">XP: <%= user.xp %></p>
         </div>
       </a>
 
@@ -68,7 +68,7 @@
       let video = document.querySelector("video");
 
       // Definir o tempo após o qual a requisição POST será feita (em milissegundos)
-      let tempoParaPost = 1000;
+      let tempoParaPost = 5000;
       let postRealizado = false; // Flag para verificar se a requisição já foi realizada
 
       // Configurar um evento para ser acionado quando o tempo do vídeo for alterado
@@ -101,7 +101,7 @@
         request.onload = function () {
           if(JSON.parse(this.responseText).xp !== undefined) {
             const userXpParagraph = document.querySelector("#userXp");
-            userXpParagraph.innerHTML = JSON.parse(this.responseText).xp;
+            userXpParagraph.innerHTML = `XP: ${JSON.parse(this.responseText).xp}`;
           } else {
             console.log(this.responseText)
           };
