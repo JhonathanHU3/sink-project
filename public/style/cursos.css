@@ -363,3 +363,39 @@ main h1{
     }
 }
 
+@media (max-width:500px){
+    .product-card{
+        background-color: #ffffff1a;
+        margin-top: 5vh;
+        padding: 2vh;
+        width: 100px;
+        border-radius: 10px;
+        margin-left: 5.5vh;
+     }
+     
+
+ .product-card h4{
+    font-size: 2vh;
+    font-weight: 400;
+    color: aliceblue;
+ }
+ .swiper {
+    background-color: #000000;
+    max-width: 1200px;
+    min-width: 320px;
+    height: 350px;
+  }
+
+
+    
+}
+@media (max-width:380px){
+    .product-card{
+        background-color: #ffffff1a;
+        margin-top: 5vh;
+        padding: 2vh;
+        width: 100px;
+        border-radius: 10px;
+        margin-left: 3vh;
+     }
+}
