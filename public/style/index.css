@@ -808,3 +808,8 @@
 }
 
 }
+@media (min-width: 1354px) {
+  .comments-grid{
+    margin-left: 20vw;
+  }
+}
