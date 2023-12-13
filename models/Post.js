@@ -111,7 +111,7 @@ export const getTopGames = async () => {
 
 export const getPostsByUserId = async (userId) => {
   try {
-    const posts = await sql`SELECT * FROM posts WHERE userid = ${userId}`;
+    const posts = await sql`SELECT * FROM posts WHERE user_id = ${userId}`;
     return posts; // Assumindo que há apenas um post com esse ID
   } catch (error) {
     console.error(error);
