@@ -108,3 +108,13 @@ export const getTopGames = async () => {
     throw new Error('Erro ao obter os jogos mais vistos');
   }
 };
+
+export const getPostsByUserId = async (userId) => {
+  try {
+    const posts = await sql`SELECT * FROM posts WHERE userid = ${userId}`;
+    return posts; // Assumindo que há apenas um post com esse ID
+  } catch (error) {
+    console.error(error);
+    throw new Error('Erro ao obter post por ID');
+  }
+}
