@@ -691,6 +691,9 @@
 
 
 @media (max-width:500px){
+    .body{
+        overflow-x:hidden;
+    }
   .tumb-matricula{
   background-color: #ffffff00;
   color: aliceblue;
