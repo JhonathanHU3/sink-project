@@ -53,13 +53,7 @@
         <h3>Tópico <%= topGames[0].name %></h3>
         <p>
             <%= topGames[0].description %>
-        </p>
-        <div class="stats">
-            <div>
-                <h4>Lorem Ipsum</h4>
-                <span>Lorem Ipsum</span>
-            </div>
-        </div>
+        </p> <br>
     </div>
     <div class="box top-forums">
         <h3>Tópicos mais vistos</h3>
@@ -72,11 +66,6 @@
         </div>
     </div>
 </section>
-      </div>
-      <div class="pagination">
-        <% for(let i = 1; i <= totalPages; i++) { %>
-          <a href="<%= classId ? `/posts/${courseId}?page=${i}` : `/posts?page=${i}` %>" class="<%= currentPage === i ? 'active' : '' %>"><%= i %></a>
-        <% } %>
       </div>
     </div>
 

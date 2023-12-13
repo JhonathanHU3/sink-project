@@ -5,14 +5,11 @@ const postsPerPage = 10;
 
 export const getPostsPaginated = async (page = 1, pageSize = 10) => {
   try {
-    const offset = (page - 1) * pageSize;
     const posts = await sql`
       SELECT posts.*, users.username, users.xp, users.profileimagedir, TO_CHAR(post_date - INTERVAL '3 hours', 'DD-MM-YYYY HH24:MI') AS new_date
       FROM posts
       JOIN users ON posts.user_id = users.id
       ORDER BY post_date DESC
-      LIMIT ${pageSize}
-      OFFSET ${offset}
     `;
     return posts;
   } catch (error) {
@@ -78,8 +75,7 @@ export const getPostById = async (postId) => {
 
 export const getTotalPosts = async () => {
   try {
-    const result = await sql`SELECT COUNT(*) as count FROM posts`;
-    return result[0].count;
+    return await sql`SELECT * FROM posts`;
   } catch (error) {
     console.error(error);
     throw new Error('Erro ao obter o total de postagens');
