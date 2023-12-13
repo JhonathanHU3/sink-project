@@ -687,3 +687,121 @@
       height: 70vh;
     }
   }
+
+
+
+@media (max-width:500px){
+  .tumb-matricula{
+  background-color: #ffffff00;
+  color: aliceblue;
+  max-width: 500px;
+  min-width: 250px;
+  height: 40vh;
+  padding-top: 10px;
+  padding-right: 0px;
+  padding-left: 0px;
+  position: absolute;
+  top: 8vh;
+  left: 2vh;
+  z-index: 2;
+  border-radius: 10px;
+}
+.tumb-matricula h1{/**/
+  margin-top: 2vh;
+  font-size: 5vh;
+}
+.tumb-matricula p{
+  letter-spacing: 3px;
+  margin-bottom: 18px;
+  font-weight: 300;
+  margin-bottom: 6vh;
+}
+.matricule-se button{/**/
+  margin: 1vh;
+  padding: 1vh;
+  width: 130px;
+  color: aliceblue;
+  font-weight: 600;
+}
+
+
+
+/*jogos famosos*/
+
+.ver-catalogo {
+  width: 100vw;
+  display: flex;
+  justify-content: space-between;
+  height: 80vh;
+  margin-top: 30px;
+}
+.divis {
+  padding-top: 2vh;
+}
+.divis h3{
+  font-size: 3vh;
+}
+.divis h1{
+  font-size: 6vh;
+  font-family: 'Silkscreen', sans-serif;
+}
+.divis{
+  font-size: 4vh;
+}
+
+
+.jogos-famosos img {
+  width: 100px;
+  height: auto;
+}
+
+.titulo{
+  margin-top: 100px;
+  margin-bottom: 30px;
+  height: 10vh;
+}
+
+/*carrosuel*/
+
+.carousel-container {
+  width: 220%;
+  height: 50vh;
+  margin-top: 0;
+}
+.carousel-item {
+  margin-top: 20px;
+  margin-left: 5vh;
+}
+
+
+.card-populares-car{
+  background-color: rgba(240, 248, 255, 0.059);
+  max-width: 600px;
+  min-width: 200px;
+  max-height: 250px;
+  padding: 30px;
+  border-radius: 10px;
+  margin-left: 10px;
+}
+
+
+/*populares*/
+
+.populares{
+  width: 100vw;
+  display: block;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.card-popular{
+  width: 100vw;
+  height: auto;
+  background-color: rgb(0, 0, 0);
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  box-shadow: 0 2px 0 rgba(255, 255, 255, 0);
+}
+
+}
