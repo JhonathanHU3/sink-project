@@ -24,13 +24,13 @@ routes.post("/login", UserManager.loginUser);
 
 // Routes to Create, Get, and Get by Course ID Forum Posts
 // Modify these routes for pagination
-routes.get("/posts", showAllPosts);
-routes.post("/posts", submitPost);
-routes.get("/posts/:courseId", showPostsByClassId);
+routes.get("/posts", verifyToken, showAllPosts);
+routes.post("/posts", verifyToken, submitPost);
+routes.get("/posts/:courseId", verifyToken, showPostsByClassId);
 
 // Routes for comments
-routes.get('/posts/open/:postId', showCommentsByPostId);
-routes.post('/posts/:postId/comments', submitComment);
+routes.get('/posts/open/:postId', verifyToken, showCommentsByPostId);
+routes.post('/posts/:postId/comments', verifyToken, submitComment);
 
 // Home page route with token verification
 routes.get("/home", verifyToken, PagesController.renderHomePage);

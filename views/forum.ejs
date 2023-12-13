@@ -13,39 +13,38 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
   <title>Home</title>
-  <style>
-    /* Adicione seus estilos CSS personalizados aqui */
-    .popup {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.5);
-    }
-
-    .popup-content {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background-color: #fff;
-      padding: 20px;
-      text-align: center;
-    }
-
-    .close {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      cursor: pointer;
-    }
-  </style>
 </head>
 
 <body>
+
   <main class="main">
+    <button class="editButton" onclick="openPopup()">Nova postagem</button>
+
+    <div id="popup">
+      <form method="post" action="/posts">
+
+        <label class="labels" for="name">Título:</label><br>
+        <input type="text" id="title" name="title" required /><br>
+
+        <label class="labels" for="username">Conteúdo:</label><br>
+        <input type="text" id="content" name="content" required /><br>
+
+        <label class="labels" for="username">Seleciona qual jogo deseja marcar:</label><br>
+        <select id="game" name="courseId" required>
+          <option value="lol">League of Legends</option>
+          <option value="valorant">Valorant</option>
+          <option value="cs2">Counter-Strike 2</option>
+          <option value="dota2">Dota 2</option>
+          <option value="fortnite">Fortnite</option>
+        </select><br>
+
+        <button id="exitButton" class="btn" onclick="closePopup()">Fechar</button>
+        <button class="btn" type="submit">Salvar</button>
+      </form>
+    </div>
+
+    <div id="overlay"></div>
+
     <div class="container">
       <div class="row">
         <section class="left">
@@ -58,8 +57,8 @@
                 </div>
                 <div class="details">
                   <p>
-                    <%= post.username %>     
-                    <%= post.xp %> XP
+                    <%= post.username %>
+                      <%= post.xp %> XP
                   </p>
                   <h3>
                     <%= post.title %>
@@ -76,27 +75,31 @@
               </div>
             </div>
             <% }); %>
-            <!-- Adicione o botão para abrir o popup -->
-            <button onclick="openPopup()">Criar Post</button>
+
         </section>
         <section class="right">
           <div class="box first">
             <% if (currentGame && currentGame.name && currentGame.description) { %>
-              <h3>Tópico <%= currentGame.name %></h3>
-              <p><%= currentGame.description %></p>
-            <% } else { %>
-              <p>Nenhum tópico disponível</p>
-            <% } %>
+              <h3>Tópico <%= currentGame.name %>
+              </h3>
+              <p>
+                <%= currentGame.description %>
+              </p>
+              <% } else { %>
+                <p>Nenhum tópico disponível</p>
+                <% } %>
           </div>
           <div class="box top-forums">
-              <h3>Tópicos mais vistos</h3>
-              <a href="#"> <i class="fa-solid fa-arrow-right"></i></a>
-              <div class="inner-box">
-                  <h4><a class="forum-link" href="/posts">Todas as Postagens</a></h4>
-                  <% topGames.slice(0).forEach(course => { %>
-                      <h4><a class="forum-link" href="/posts/<%= course.id %>"><%= course.name %></a></h4>
-                  <% }); %>
-              </div>
+            <h3>Tópicos mais vistos</h3>
+            <a href="#"> <i class="fa-solid fa-arrow-right"></i></a>
+            <div class="inner-box">
+              <h4><a class="forum-link" href="/posts">Todas as Postagens</a></h4>
+              <% topGames.slice(0).forEach(course=> { %>
+                <h4><a class="forum-link" href="/posts/<%= course.id %>">
+                    <%= course.name %>
+                  </a></h4>
+                <% }); %>
+            </div>
           </div>
         </section>
       </div>
@@ -110,61 +113,51 @@
     <p>Fundadores: Grazielle Sorrentino - Henrique Pereira - Ian Maciel - Jhonathan Silva</p>
   </footer>
 
-  <!-- Popup para criar post -->
-  <div class="popup" id="createPostPopup">
-    <div class="popup-content">
-      <span class="close" onclick="closePopup()">&times;</span>
-      <h2>Criar Novo Post</h2>
-      <form id="createPostForm">
-        <label for="postTitle">Título:</label>
-        <input type="text" id="postTitle" name="postTitle" required>
-
-        <label for="postContent">Conteúdo:</label>
-        <textarea id="postContent" name="postContent" required></textarea>
-
-        <label for="postClassId">Class ID:</label>
-        <input type="text" id="postClassId" name="postClassId" required>
-
-        <!-- Adicione um campo oculto para armazenar o ID do usuário -->
-        <input type="hidden" id="userId" name="userId" value="1">
-
-        <button type="submit">Criar Post</button>
-      </form>
-    </div>
-  </div>
-
   <script>
-    /* Adicione seus scripts JavaScript aqui */
-
     // Função para abrir o popup
     function openPopup() {
-      document.getElementById('createPostPopup').style.display = 'block';
+      document.getElementById("popup").style.display = "block";
+      document.getElementById("overlay").style.display = "block";
     }
 
     // Função para fechar o popup
     function closePopup() {
-      document.getElementById('createPostPopup').style.display = 'none';
+      document.getElementById("popup").style.display = "none";
+      document.getElementById("overlay").style.display = "none";
     }
 
-    // Envie o formulário para o servidor (você precisará adicionar a lógica do servidor)
-    document.getElementById('createPostForm').addEventListener('submit', function (event) {
-      event.preventDefault();
+    // Função para abrir o modal
+    function openModal(e) {
+      document.getElementById("myModal").style.display = "flex";
+    }
 
-      // Aqui você pode enviar os dados do formulário para o servidor usando AJAX ou outra técnica
-      // Exemplo com jQuery AJAX:
-      $.ajax({
-        url: '/create-post-endpoint', // Substitua pelo URL do seu endpoint de criação de post
-        type: 'POST',
-        data: $('#createPostForm').serialize(),
-        success: function (response) {
-          // Lógica para lidar com a resposta do servidor
-          console.log(response);
-          closePopup(); // Feche o popup após o post ser criado
-        },
-        error: function (error) {
-          console.error(error);
-        }
-      });
+    // Função para fechar o modal
+    function closeModal() {
+      document.getElementById("myModal").style.display = "none";
+    }
+
+    // Função para selecionar a foto
+    document.querySelector(".editPhotoButton").addEventListener("click", function (event) {
+      event.preventDefault();
+    });
+
+    function selectPhoto(photoNumber) {
+      // Suponha que as fotos estejam na mesma pasta do HTML com nomes foto1.jpg, foto2.jpg, etc.
+      const nomeFoto = `${photoNumber}.jpg`;
+      const caminhoFoto = `/img/profileImg/${nomeFoto}`;
+
+      // Atualiza a imagem exibida
+      document.getElementById("fotoSelecionada").src = caminhoFoto;
+
+      // Salva o caminho da foto no input (ou pode salvar outras informações, dependendo das necessidades)
+      document.getElementById("profilePhotoInput").value = caminhoFoto;
+
+      // Fecha o modal após selecionar a foto
+      closeModal();
+    }
+
+    document.querySelector("#exitButton").addEventListener("click", function (event) {
+      event.preventDefault();
     });
   </script>
 </body>

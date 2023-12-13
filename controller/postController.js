@@ -17,7 +17,8 @@ export const showAllPosts = async (req, res) => {
 };
 
 export const submitPost = async (req, res) => {
-  const { title, content, userId, courseId } = req.body;
+  const { title, content, courseId } = req.body;
+  const userId = req.user.userId;
 
   try {
     // Checking for null or undefined values
@@ -27,8 +28,8 @@ export const submitPost = async (req, res) => {
     }
 
     // Adding the new post to the database
-    const newPost = await PostModel.createPost(title, content, userId, courseId);
-    res.redirect(`/forum`);
+    await PostModel.createPost(title, content, userId, courseId);
+    res.redirect(`/posts`);
   } catch (error) {
     console.error(error);
     res.status(500).send('Erro ao criar postagem');
