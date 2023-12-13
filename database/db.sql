@@ -87,8 +87,15 @@ CREATE TABLE comments (
 
 );
 
-INSERT INTO videos (id, title, description, imgdir, xp_earned, course_id)
-VALUES
-('aula1_lol', 'Como kaitar no League of Legends', 'Hoje iremos ensinar a kaitar no League of Legends', '/img/videosimg/comokaitar.jpg', 0, 'lol'),
-('aula1_dota2', 'Teleporte do vagabundo no DOTA 2', 'Aprenda o teleporte do desgraçado máximo com DinossauroHU3', '/img/videosimg/tpdovagabundo.jpg', 0, 'cs2');
+
+INSERT INTO videos 
+(id, title, description, imgdir, xp_earned, course_id) VALUES
+('aula1_lol', 'Como kaitar no League of Legends', 'Hoje iremos ensinar a kaitar no League of Legends', '/img/videosimg/comokaitar.jpg', 300, 'lol'),
+('aula1_valorant', 'Como Dar Tapa Drop!', 'Meu HighLight muito top de valorant para ensina-los a jogar corretamente!', '/img/videosimg/aula1_valorant.png', 400, 'valorant'),
+('aula2_valorant', 'Como Destruir de AwP!', 'Hoje Vou Ensinalos A Destruir de AwP!', '/img/videosimg/aula2_valorant.png', 450, 'valorant'),
+('aula1_cs2', 'Como bangar a perfeitinha!', 'Hoje ensinarei pixels ROUBADISSIMOS DE BANGS no Cs2', '/img/videosimg/aula1_cs2.png', 500, 'cs2'),
+('aula1_dota2', 'Teleporte do vagabundo no DOTA 2', 'Aprenda o teleporte do desgraçado máximo com DinossauroHU3', '/img/videosimg/tpdovagabundo.jpg', 288, 'dota2')
+('aula1_fortnite', 'Como jogar fornite da maneira correta', 'Aprenda a jogar fortnite agora', '/img/videosimg/aula1_fortnite.jpg', 621, 'fortnite');
+
+
 

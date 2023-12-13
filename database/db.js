@@ -1,12 +1,16 @@
 import "dotenv/config";
 import postgres from "postgres";
 
-let { PGHOST, PGDATABASE, PGUSER, PGPASSWORD, PGLINK } = process.env;
+let { PGHOST, PGDATABASE, PGUSER, PGPASSWORD, PGLINK, ENDPOINT_ID } = process.env;
 
-export const sql = postgres(PGLINK, {
+export const sql = postgres({
   host: PGHOST,
   database: PGDATABASE,
   username: PGUSER,
   password: PGPASSWORD,
   port: 5432,
+  ssl: 'require',
+  connection: {
+    options: `project=${ENDPOINT_ID}`,
+  },
 });

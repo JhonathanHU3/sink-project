@@ -75,6 +75,7 @@ export const getPostById = async (postId) => {
   }
 };
 
+
 export const getTotalPosts = async () => {
   try {
     return await sql`SELECT * FROM posts`;

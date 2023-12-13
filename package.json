@@ -7,6 +7,9 @@
     "test": "node index.js",
     "dev": "node --watch --no-warnings index.js"
   },
+  "engines": {
+    "node": "20.9.0"
+  },
   "type": "module",
   "repository": {
     "type": "git",

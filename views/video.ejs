@@ -1,36 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style/video.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Silkscreen&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" />
+    <link rel="icon" href="img/mascote_sink-removebg-preview.png" type="image/x-icon">
+    <title>Document</title>
+  </head>
+  <body>
+    <nav>
+      <a href="/user/<%= user.username %>" class="user">
+        <img src="<%= user.profileImageDir %>" class="perfil"></img>
+        <div class="userinfo">
+          <p><%= user.username %></p> 
+          <p id="userXp">XP: <%= user.xp %></p>
+        </div>
+      </a>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Document</title>
-</head>
+      <div class="menu-toggle" id="mobile-menu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+    <ul class="menu">
+        <li><a href="/courses">MAIS CURSOS</a></li>
+        <li><a href="/forum">FÓRUM</a></li>
+        <li><a href="/home">HOME</a></li>
+    </ul>
+    </nav>
 
-<body>
-  <a href="/user/<%= user.username %>">
-    <h1>Hello <%= user.username %> </h1>
-    <p id="userXp">xp: <%= user.xp %></p>
+    <main>
+      <div id="videoframe">
+        <video data-xp_earned="<%= videoData.xp_earned %>" data-video_id="<%= videoData.id %>" src="<%= videoLink %>" autoplay controls></video>
+      </div>
 
-    <img src="<%= user.profileImageDir %>" width="100px" height="100px" />
+      <h1 class="title"><%= videoData.title %></h1>
+      <p class="description">
+        <%= videoData.description %>
+      </p>
+    </main>
 
-  </a>
+    <script>
+        var menuToggle = document.getElementById('mobile-menu');
+        var menu = document.querySelector('.menu');
 
-  <video data-xp_earned="<%= videoData.xp_earned %>" data-video_id="<%= videoData.id %>" width="500px" height="500px" controls autoplay
-    src="<%= videoLink %>"></video>
-  <h1>
-    <%= videoData.title %>
-  </h1>
-  <p>
-    <%= videoData.description %>
-  </p>
+        // Adiciona evento de clique ao ícone do hamburguer
+        menuToggle.addEventListener('click', function () {
+            menu.classList.toggle('show-menu');
+        });
 
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
+        // Adiciona evento de clique no documento para fechar o menu ao clicar fora
+        document.addEventListener('click', function (event) {
+            var isClickInsideMenu = menu.contains(event.target);
+            var isClickOnMenuToggle = menuToggle.contains(event.target);
+
+            if (!isClickInsideMenu && !isClickOnMenuToggle) {
+                menu.classList.remove('show-menu');
+            }
+        });
+ 
+        document.addEventListener("DOMContentLoaded", function () {
       let video = document.querySelector("video");
 
       // Definir o tempo após o qual a requisição POST será feita (em milissegundos)
-      let tempoParaPost = 1000;
+      let tempoParaPost = 5000;
       let postRealizado = false; // Flag para verificar se a requisição já foi realizada
 
       // Configurar um evento para ser acionado quando o tempo do vídeo for alterado
@@ -63,7 +101,7 @@
         request.onload = function () {
           if(JSON.parse(this.responseText).xp !== undefined) {
             const userXpParagraph = document.querySelector("#userXp");
-            userXpParagraph.innerHTML = JSON.parse(this.responseText).xp;
+            userXpParagraph.innerHTML = `XP: ${JSON.parse(this.responseText).xp}`;
           } else {
             console.log(this.responseText)
           };
@@ -72,7 +110,6 @@
         return request.responseText;
       }
     });
-  </script>
-</body>
-
+    </script>
+  </body>
 </html>
