@@ -4,10 +4,12 @@ import * as PostModel from "../models/Post.js";
 export const showAllPosts = async (req, res) => {
   try {
     const posts = await PostModel.getPostsPaginated();
-
     const topGames = await PostModel.getTopGames();
 
-    res.render('forum', { posts, topGames });
+    // Adicione esta linha para obter o primeiro jogo
+    const currentGame = topGames.length > 0 ? topGames[0] : {};
+
+    res.render('forum', { posts, topGames, currentGame });
   } catch (error) {
     console.error(error);
     res.status(500).send('Erro ao obter postagens por Course ID');
@@ -38,15 +40,20 @@ export const showPostsByClassId = async (req, res) => {
   try {
     const page = req.query.page || 1;
     const pageSize = req.query.pageSize || 10;
+    const courseId = req.params.courseId;
 
-    const courseId = req.params.courseId
+    console.log('Course ID:', courseId);
 
     const posts = await PostModel.getPostsByClassIdPaginated(courseId, page, pageSize);
     const totalPages = Math.ceil(posts.length / pageSize);
 
     const topGames = await PostModel.getTopGames();
+    console.log('Top Games:', topGames);
 
-    res.render('forum', { posts, totalPages, currentPage: parseInt(page), courseId, topGames });
+    const currentGame = topGames.find(game => game.id === courseId) || {};
+    console.log('Current Game:', currentGame);
+
+    res.render('forum', { posts, totalPages, currentPage: parseInt(page), courseId, topGames, currentGame });
   } catch (error) {
     console.error(error);
     res.status(500).send('Erro ao obter postagens por Class ID');

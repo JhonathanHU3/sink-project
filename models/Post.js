@@ -41,14 +41,16 @@ export const getPostsByClassIdPaginated = async (courseId, page = 1, pageSize = 
     }
 
     const offset = (page - 1) * pageSize;
-  
+
     const result = await sql`
       SELECT posts.*, users.username, users.profileimagedir, TO_CHAR(post_date - INTERVAL '3 hours', 'DD-MM-YYYY HH24:MI') AS new_date
       FROM posts
       JOIN users ON posts.user_id = users.id
-      WHERE posts.course_id = ${courseId}
+      JOIN courses ON posts.course_id = courses.id
+      WHERE LOWER(courses.name) = LOWER(${courseId})
       ORDER BY post_date DESC
       LIMIT ${pageSize} OFFSET ${offset}`;
+
     console.log('Query Result:', result);
 
     return result;

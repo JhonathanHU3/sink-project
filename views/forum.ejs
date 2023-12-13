@@ -13,6 +13,35 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
   <title>Home</title>
+  <style>
+    /* Adicione seus estilos CSS personalizados aqui */
+    .popup {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .popup-content {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #fff;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      cursor: pointer;
+    }
+  </style>
 </head>
 
 <body>
@@ -47,134 +76,96 @@
               </div>
             </div>
             <% }); %>
+            <!-- Adicione o botão para abrir o popup -->
+            <button onclick="openPopup()">Criar Post</button>
         </section>
-<section class="right">
-    <div class="box first">
-        <h3>Tópico <%= topGames[0].name %></h3>
-        <p>
-            <%= topGames[0].description %>
-        </p> <br>
-    </div>
-    <div class="box top-forums">
-        <h3>Tópicos mais vistos</h3>
-        <a href="#"> <i class="fa-solid fa-arrow-right"></i></a>
-        <div class="inner-box">
-            <h4><a class="forum-link" href="/posts">Todas as Postagens</a></h4>
-            <% topGames.slice(1).forEach(course => { %>
-              <h4><a class="forum-link" href="/posts/<%= course.id %>"><%= course.name %></a></h4>
-          <% }); %>
-        </div>
-    </div>
-</section>
+        <section class="right">
+          <div class="box first">
+            <% if (currentGame && currentGame.name && currentGame.description) { %>
+              <h3>Tópico <%= currentGame.name %></h3>
+              <p><%= currentGame.description %></p>
+            <% } else { %>
+              <p>Nenhum tópico disponível</p>
+            <% } %>
+          </div>
+          <div class="box top-forums">
+              <h3>Tópicos mais vistos</h3>
+              <a href="#"> <i class="fa-solid fa-arrow-right"></i></a>
+              <div class="inner-box">
+                  <h4><a class="forum-link" href="/posts">Todas as Postagens</a></h4>
+                  <% topGames.slice(0).forEach(course => { %>
+                      <h4><a class="forum-link" href="/posts/<%= course.id %>"><%= course.name %></a></h4>
+                  <% }); %>
+              </div>
+          </div>
+        </section>
       </div>
     </div>
-
   </main>
-
-
 
   <footer>
     <p>&copy; 2023 Sink Academy Games. Todos os direitos reservados.</p>
     <p>Contato: contato@sinkacademygames.com</p>
     <p>Endereço: Rua dos Games, 123 - Cidade Gamer</p>
-    <p>Fundadores: Grazielle Sorrentino - Henrique Pereira -Ian Maciel- Jhonathan Silva</p>
+    <p>Fundadores: Grazielle Sorrentino - Henrique Pereira - Ian Maciel - Jhonathan Silva</p>
   </footer>
+
+  <!-- Popup para criar post -->
+  <div class="popup" id="createPostPopup">
+    <div class="popup-content">
+      <span class="close" onclick="closePopup()">&times;</span>
+      <h2>Criar Novo Post</h2>
+      <form id="createPostForm">
+        <label for="postTitle">Título:</label>
+        <input type="text" id="postTitle" name="postTitle" required>
+
+        <label for="postContent">Conteúdo:</label>
+        <textarea id="postContent" name="postContent" required></textarea>
+
+        <label for="postClassId">Class ID:</label>
+        <input type="text" id="postClassId" name="postClassId" required>
+
+        <!-- Adicione um campo oculto para armazenar o ID do usuário -->
+        <input type="hidden" id="userId" name="userId" value="1">
+
+        <button type="submit">Criar Post</button>
+      </form>
+    </div>
+  </div>
+
   <script>
-    /*nav*/
-    const nav = document.querySelector('nav');
+    /* Adicione seus scripts JavaScript aqui */
 
-    window.addEventListener('scroll', function () {
-      if (window.scrollY >= window.innerHeight) {
-        nav.style.backgroundColor = 'black';
-      } else {
-        nav.style.backgroundColor = 'transparent';
-      }
-    });
+    // Função para abrir o popup
+    function openPopup() {
+      document.getElementById('createPostPopup').style.display = 'block';
+    }
 
+    // Função para fechar o popup
+    function closePopup() {
+      document.getElementById('createPostPopup').style.display = 'none';
+    }
 
+    // Envie o formulário para o servidor (você precisará adicionar a lógica do servidor)
+    document.getElementById('createPostForm').addEventListener('submit', function (event) {
+      event.preventDefault();
 
-    var menuToggle = document.getElementById('mobile-menu');
-    var menu = document.querySelector('.menu');
-
-    menuToggle.addEventListener('click', function () {
-      menu.classList.toggle('show-menu');
-    });
-
-
-    document.addEventListener('click', function (event) {
-      var isClickInsideMenu = menu.contains(event.target);
-      var isClickOnMenuToggle = menuToggle.contains(event.target);
-
-      if (!isClickInsideMenu && !isClickOnMenuToggle) {
-        menu.classList.remove('show-menu');
-      }
-    });
-
-
-
-    document.addEventListener('DOMContentLoaded', function () {
-      var swiper = new Swiper('.swiper-container', {
-        slidesPerView: 1,
-        spaceBetween: 1,
-        loop: true,
-        autoplay: {
-          delay: 2000,
-          disableOnInteraction: false,
+      // Aqui você pode enviar os dados do formulário para o servidor usando AJAX ou outra técnica
+      // Exemplo com jQuery AJAX:
+      $.ajax({
+        url: '/create-post-endpoint', // Substitua pelo URL do seu endpoint de criação de post
+        type: 'POST',
+        data: $('#createPostForm').serialize(),
+        success: function (response) {
+          // Lógica para lidar com a resposta do servidor
+          console.log(response);
+          closePopup(); // Feche o popup após o post ser criado
         },
-        pagination: {
-          el: '.swiper-pagination',
-          clickable: true,
-        },
-      });
-    });
-
-    document.addEventListener('DOMContentLoaded', function () {
-      var recomendacoesSwiper = new Swiper('.recomendacoes-swiper-container', {
-        slidesPerView: 1,
-        spaceBetween: 10,
-        navigation: {
-          nextEl: '.recomendacoes-swiper-button-next',
-          prevEl: '.recomendacoes-swiper-button-prev',
-        },
-        scrollbar: {
-          el: '.recomendacoes-swiper-scrollbar',
-        },
-        breakpoints: {
-          768: {
-            slidesPerView: 2,
-            spaceBetween: 20,
-          },
-          992: {
-            slidesPerView: 3,
-            spaceBetween: 30,
-          },
-        },
-      });
-    });
-
-    /*slick*/
-
-    $(document).ready(function () {
-      $('.owl-carousel').owlCarousel({
-        items: 3, // Número de itens visíveis
-        loop: true,
-        margin: 100,
-        center: true, // Mantém o item do meio em evidência
-        nav: true,
-        responsive: {
-          0: {
-            items: 2
-          },
-          600: {
-            items: 3
-          },
-          1000: {
-            items: 4
-          }
+        error: function (error) {
+          console.error(error);
         }
       });
     });
-
   </script>
 </body>
 
