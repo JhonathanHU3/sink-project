@@ -6,6 +6,8 @@ export const showAllPosts = async (req, res) => {
     const page = req.query.page || 1;
     const pageSize = req.query.pageSize || 10;
     const courseId = req.params.courseId; 
+    console.log(courseId)
+    const posts = await PostModel.getPostsByClassIdPaginated(courseId, page, pageSize);
     const totalPosts = await PostModel.getTotalPostsByClassId(courseId);
     const totalPages = Math.ceil(totalPosts / pageSize);
 
