@@ -7,7 +7,7 @@ export const showAllPosts = async (req, res) => {
     const topGames = await PostModel.getTopGames();
 
     // Adicione esta linha para obter o primeiro jogo
-    const currentGame = topGames.length > 0 ? topGames[0] : {};
+    const currentGame = null
 
     res.render('forum', { posts, topGames, currentGame });
   } catch (error) {

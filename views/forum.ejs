@@ -80,25 +80,20 @@
         <section class="right">
           <div class="box first">
             <% if (currentGame && currentGame.name && currentGame.description) { %>
-              <h3>Tópico <%= currentGame.name %>
-              </h3>
-              <p>
-                <%= currentGame.description %>
-              </p>
-              <% } else { %>
-                <p>Nenhum tópico disponível</p>
-                <% } %>
+              <h3>Tópico <%= currentGame.name %></h3>
+              <p><%= currentGame.name === 'All' ? 'Frase padrão para mostrar todos os posts' : currentGame.description %></p>
+            <% } else { %>
+              <p>Nenhum tópico disponível</p>
+            <% } %>
           </div>
           <div class="box top-forums">
             <h3>Tópicos mais vistos</h3>
             <a href="#"> <i class="fa-solid fa-arrow-right"></i></a>
             <div class="inner-box">
               <h4><a class="forum-link" href="/posts">Todas as Postagens</a></h4>
-              <% topGames.slice(0).forEach(course=> { %>
-                <h4><a class="forum-link" href="/posts/<%= course.id %>">
-                    <%= course.name %>
-                  </a></h4>
-                <% }); %>
+              <% topGames.slice(0).forEach(course => { %>
+                <h4><a class="forum-link" href="/posts/<%= course.name %>"><%= course.name %></a></h4>
+              <% }); %>
             </div>
           </div>
         </section>
