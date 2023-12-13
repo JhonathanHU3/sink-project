@@ -1,4 +1,3 @@
-// Imports
 import { Router } from "express";
 import { submitComment, showCommentsByPostId } from "../controller/commentsController.js";
 import * as UserManager from "../controller/UserManager.js";
@@ -24,16 +23,17 @@ routes.get("/login", PagesController.renderLoginPage);
 routes.post("/register", UserManager.registerUser);
 routes.post("/login", UserManager.loginUser);
 
-
 // Routes to Create, Get, and Get by Course ID Forum Posts
-routes.get("/forum", showAllPosts);
-routes.post("/posts", submitPost);
-routes.get("/posts/:classId", showPostsByClassId);
+
+// Modify these routes for pagination
+routes.get("/posts", verifyToken, showAllPosts);
+routes.post("/posts", verifyToken, submitPost);
+routes.get("/posts/:courseId", verifyToken, showPostsByClassId);
+
 
 // Routes for comments
-routes.get('/posts/open/:postId', showCommentsByPostId);
-routes.post('/posts/:postId/comments', submitComment);
-
+routes.get('/posts/open/:postId', verifyToken, showCommentsByPostId);
+routes.post('/posts/:postId/comments', verifyToken, submitComment);
 
 // Home page route with token verification
 routes.get("/home", verifyToken, PagesController.renderHomePage);
@@ -50,6 +50,10 @@ routes.get("/courses/:id", verifyToken, PagesController.renderCoursePage);
 routes.get("/video/:id", verifyToken, PagesController.renderVideoPage);
 
 // Route to add more xp to a user
-routes.post("/addUserXp", verifyToken, UserManager.addXpToUser)
+routes.post("/addUserXp", verifyToken, UserManager.addXpToUser);
+
+
+
+
 
 export { routes };

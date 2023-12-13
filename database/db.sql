@@ -45,22 +45,36 @@ CREATE TABLE videos (
     title VARCHAR(120) NOT NULL,
     description VARCHAR(500) NOT NULL, 
     imgdir VARCHAR(120) NOT NULL,
-    xp_earned INT NOT NULL,
+    xp_earned INT, -- Removendo o NOT NULL
     course_id VARCHAR(25) NOT NULL,
     FOREIGN KEY (course_id) REFERENCES courses (id) 
 );
+
 
 
 CREATE TABLE posts (
     id SERIAL PRIMARY KEY,
     user_id TEXT NOT NULL,
     title VARCHAR,
-    class_id VARCHAR(25) NOT NULL,
+    course_id VARCHAR(25) NOT NULL,
     content VARCHAR,
     post_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users (id),
-    FOREIGN KEY (class_id) REFERENCES courses (id)
+    FOREIGN KEY (course_id) REFERENCES courses (id)
 );
+
+INSERT INTO posts (title, content, user_id, course_id) 
+VALUES
+  ('Dúvida sobre Ranked', 'Estou com dúvidas sobre o sistema de ranked no LoL. Alguém pode me ajudar?', 1, 'lol'),
+  ('Melhores agentes para ranqueada', 'Quais são os melhores agentes para jogar em partidas ranqueadas no Valorant?', 2, 'valorant'),
+  ('Evento épico em Fortnite', 'Vocês viram o último evento em Fortnite? Foi incrível!', 3, 'fortnite'),
+  ('Estratégias para DOTA 2', 'Compartilhem suas estratégias favoritas para vencer no DOTA 2.', 4, 'dota2'),
+  ('Dicas avançadas de mira no CS 2', 'Preciso de dicas avançadas para melhorar minha mira no CS 2.', 5, 'cs2'),
+  ('Novidades no League of Legends', 'Alguém sabe das últimas novidades no universo do League of Legends?', 6, 'lol'),
+  ('Discussão sobre patches no Valorant', 'Vamos discutir as mudanças mais recentes nos patches do Valorant.', 7, 'valorant'),
+  ('Estratégias avançadas em DOTA 2', 'Compartilhe suas estratégias avançadas para DOTA 2 aqui.', 8, 'dota2'),
+  ('Competindo em Fortnite', 'Como se preparar para competições em Fortnite? Alguma dica?', 9, 'fortnite'),
+  ('CS 2 vs Valorant: Qual é o melhor?', 'Vamos debater sobre as diferenças entre CS 2 e Valorant.', 10, 'cs2');
 
 CREATE TABLE comments (
     id SERIAL PRIMARY KEY,
@@ -73,6 +87,7 @@ CREATE TABLE comments (
 
 );
 
+
 INSERT INTO videos 
 (id, title, description, imgdir, xp_earned, course_id) VALUES
 ('aula1_lol', 'Como kaitar no League of Legends', 'Hoje iremos ensinar a kaitar no League of Legends', '/img/videosimg/comokaitar.jpg', 300, 'lol'),
@@ -81,5 +96,6 @@ INSERT INTO videos
 ('aula1_cs2', 'Como bangar a perfeitinha!', 'Hoje ensinarei pixels ROUBADISSIMOS DE BANGS no Cs2', '/img/videosimg/aula1_cs2.png', 500, 'cs2'),
 ('aula1_dota2', 'Teleporte do vagabundo no DOTA 2', 'Aprenda o teleporte do desgraçado máximo com DinossauroHU3', '/img/videosimg/tpdovagabundo.jpg', 288, 'dota2')
 ('aula1_fortnite', 'Como jogar fornite da maneira correta', 'Aprenda a jogar fortnite agora', '/img/videosimg/aula1_fortnite.jpg', 621, 'fortnite');
+
 
 

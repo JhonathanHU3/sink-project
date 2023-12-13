@@ -80,19 +80,39 @@
     a.forum-link:hover {
       text-decoration: underline;
     }
+
+    .pagination {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .pagination a {
+      padding: 8px;
+      margin: 0 4px;
+      text-decoration: none;
+      color: #007bff;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .pagination a.active {
+      background-color: #007bff;
+      color: white;
+    }
   </style>
 </head>
 <body>
 
   <h2>Filtrar por Class ID</h2>
 
-  <a class="forum-link" href="/posts/:1">League of Legends</a>
-  <a class="forum-link" href="/posts/:2">CS:GO</a>
-  <a class="forum-link" href="/posts/:3">DOTA 2</a>
-  <a class="forum-link" href="/posts/:4">Fortnite</a>
-  <a class="forum-link" href="/posts/:5">Valorant</a>
-
-  <a class="forum-link" href="/posts">Mostrar Todos</a>
+  <a class="forum-link" href="/posts">Todas as Postagens</a>
+  <a class="forum-link" href="/posts/1">League of Legends</a>
+  <a class="forum-link" href="/posts/2">CS:GO</a>
+  <a class="forum-link" href="/posts/3">DOTA 2</a>
+  <a class="forum-link" href="/posts/4">Fortnite</a>
+  <a class="forum-link" href="/posts/5">Valorant</a>
 
   <h2>Lista de Posts</h2>
 
@@ -119,21 +139,13 @@
     </tbody>
   </table>
 
-  <form id="post-form" method="POST" action="/posts">
-    <label for="title">Título:</label>
-    <input type="text" id="title" name="title" placeholder="Título" required>
 
-    <label for="content">Conteúdo:</label>
-    <textarea id="content" name="content" placeholder="Conteúdo" required></textarea>
+  <div class="pagination">
+    <% for(let i = 1; i <= totalPages; i++) { %>
+      <a href="<%= classId ? `/posts/${classId}?page=${i}` : `/posts?page=${i}` %>" class="<%= currentPage === i ? 'active' : '' %>"><%= i %></a>
+    <% } %>
+  </div>
 
-    <label for="userId">Usuário ID:</label>
-    <input type="text" id="userId" name="userId" placeholder="Usuário ID" required>
-
-    <label for="classId">Id da aula:</label>
-    <input type="text" id="classId" name="classId" placeholder="Class ID" required>
-
-    <button type="submit">Criar Postagem</button>
-  </form>
 
 </body>
 </html>
