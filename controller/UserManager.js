@@ -36,9 +36,11 @@ export const registerUser = async (req, res) => {
 export const loginUser = async (req, res) => {
   const userEmail = req.body.email;
   const userPassword = req.body.password;
+  console.log(userEmail)
 
   // getting user data from database
   let [user] = await User.getUserInDb(userEmail, "email");
+  console.log(user);
 
   if (user) {
     // checking hashed password with bcrypt
