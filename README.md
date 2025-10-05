@@ -85,7 +85,6 @@ SUPABASE_KEY=chave_publica_supabase
 ## 💬 Contato e Suporte
 
 - Para dúvidas, sugestões ou bugs, abra uma [issue](https://github.com/JhonathanHU3/sink-project/issues)
-- Contato direto: [email@email.com] (substitua pelo email oficial)
 
 ---
 
